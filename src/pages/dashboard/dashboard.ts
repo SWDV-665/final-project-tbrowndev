@@ -8,7 +8,9 @@ import { ToastController } from 'ionic-angular';
 })
 export class DashboardPage {
 
-  title = "Upcoming Bills";
+  title = "Dashboard"
+  upcomingTitle = "Upcoming Bills Due";
+  
   bills = [
     {
       name:"Bill 1",
