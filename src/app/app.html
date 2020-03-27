@@ -1,0 +1,18 @@
+<ion-menu [content]="mycontent">
+    <ion-header padding>
+        <ion-title>Create</ion-title>
+    </ion-header>
+    <ion-content padding>
+        <button ion-button block clear><ion-icon name="cash"></ion-icon>Income</button>
+        <button ion-button block clear><ion-icon name="receipt"></ion-icon>Bill</button>
+        <button ion-button block clear><ion-icon name="card"></ion-icon>Credit Card</button>
+        <button ion-button block clear><ion-icon name="wallet"></ion-icon>Savings</button>
+        <button ion-button block clear><ion-icon name="star"></ion-icon>Misc.</button>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <button ion-button full clear><ion-icon name="settings"></ion-icon> Settings</button>
+        </ion-toolbar>
+    </ion-footer>
+</ion-menu>
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

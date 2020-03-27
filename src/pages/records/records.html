@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Records
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <ion-segment [(ngModel)]="items">
+      <ion-segment-button value="income">
+        Income
+      </ion-segment-button>
+      <ion-segment-button value="bills">
+        Bills
+      </ion-segment-button>
+      <ion-segment-button value="savings">
+        Savings
+      </ion-segment-button>
+      <ion-segment-button value="creditCards">
+        Cards
+      </ion-segment-button>
+      <ion-segment-button value="misc">
+        Misc.
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="items">
+    <ion-list *ngSwitchCase="'income'">
+      <ion-item>
+        <h2>Income</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'bills'">
+      <ion-item>
+        <h2>Bills</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'savings'">
+      <ion-item>
+        <h2>Savings</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'creditCards'">
+      <ion-item>
+        <h2>Credit Cards</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'misc'">
+      <ion-item>
+        <h2>Misc</h2>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

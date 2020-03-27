@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-scroll scrollX="true" direction="x">
+    <ion-card class="ion-card-square" *ngFor="let card of cards">
+      <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>
+        <div class="card-title">{{card.name}}</div>
+        <div class="card-subtitle">${{card.total}}</div>
+      </button>
+    </ion-card>
+  </ion-scroll>
+
+  <h2 style="text-align: center;">
+    Upcoming Bills
+  </h2>
+  <ion-list>
+    <!--Display a list of item objects-->
+    <ion-item-sliding *ngFor="let bill of bills; let i = index">
+      <ion-item>
+        <ion-grid>
+          <ion-row style="height: 30px;">
+            <ion-col col-2>
+              <ion-avatar>
+                <ion-icon name="cash"></ion-icon>
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-6 style="font-size: large;vertical-align: middle;">
+              {{bill.name}}
+            </ion-col>
+            <ion-col col-4 style="text-align: right;font-size: small;">
+              {{bill.duedate}}<br>
+              <h3 style="color: red; font-weight: bold;">${{bill.amountdue}}</h3>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item-options side="left" (ionSwipe)="markPaid(bill, index)">
+        <button ion-button expandable (click)="markPaid(bill, index)">
+          <!--ion-icon name="checkmark"></ion-icon>-->
+          Mark Paid
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
