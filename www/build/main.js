@@ -176,7 +176,7 @@ var DashboardPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-dashboard',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{title}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-scroll scrollX="true" direction="x">\n    <ion-card class="ion-card-square" *ngFor="let card of cards">\n      <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>\n        <div class="card-title">{{card.name}}</div>\n        <div class="card-subtitle">${{card.total}}</div>\n      </button>\n    </ion-card>\n  </ion-scroll>\n\n  <h2 style="text-align: center;">\n    {{upcomingTitle}}\n  </h2>\n  <ion-list>\n    <!--Display a list of item objects-->\n    <ion-item-sliding *ngFor="let bill of bills; let i = index">\n      <ion-item>\n        <ion-grid>\n          <ion-row style="height: 30px;">\n            <ion-col col-2>\n              <ion-avatar>\n                <ion-icon name="cash"></ion-icon>\n              </ion-avatar>\n            </ion-col>\n            <ion-col col-6 style="font-size: large;vertical-align: middle;">\n              {{bill.name}}\n            </ion-col>\n            <ion-col col-4 style="text-align: right;font-size: small;">\n              {{bill.duedate}}<br>\n              <h3 style="color: red; font-weight: bold;">${{bill.amountdue}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="markPaid(bill, index)">\n        <button ion-button expandable (click)="markPaid(bill, index)">\n          <!--ion-icon name="checkmark"></ion-icon>-->\n          Mark Paid\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]])
     ], DashboardPage);
     return DashboardPage;
 }());
@@ -190,6 +190,7 @@ var DashboardPage = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecordsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ViewerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -203,17 +204,75 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var RecordsPage = /** @class */ (function () {
-    function RecordsPage(navCtrl) {
+    function RecordsPage(navCtrl, toastCtrl) {
         this.navCtrl = navCtrl;
+        this.toastCtrl = toastCtrl;
+        //Sets income as the selected section
+        this.records = "income";
+        this.income = [
+            { name: "Income 1", id: "kjhet1" },
+            { name: "Income 2", id: "kjhet1" }
+        ];
+        this.bills = [
+            { name: "Bill 1", id: "kjhet1" },
+            { name: "Bill 2", id: "kjhet1" },
+            { name: "Bill 3", id: "kjhet1" },
+            { name: "Bill 4", id: "kjhet1" },
+            { name: "Bill 5", id: "kjhet1" },
+            { name: "Bill 6", id: "kjhet1" },
+            { name: "Bill 7", id: "kjhet1" },
+            { name: "Bill 8", id: "kjhet1" },
+            { name: "Bill 9", id: "kjhet1" },
+            { name: "Bill 10", id: "kjhet1" },
+            { name: "Bill 11", id: "kjhet1" }
+        ];
+        this.savings = [
+            { name: "Saving Account 1", id: "kjhet1" },
+            { name: "Saving Account 2", id: "kjhet1" },
+            { name: "Saving Account 3", id: "kjhet1" },
+            { name: "Saving Account 4", id: "kjhet1" }
+        ];
+        this.creditCards = [
+            { name: "Credit Card 1", id: "kjhet1" },
+            { name: "Credit Card 2", id: "kjhet1" }
+        ];
+        this.misc = [
+            { name: "Misc. 1", id: "kjhet1" },
+            { name: "Misc. 2", id: "kjhet1" },
+            { name: "Misc. 3", id: "kjhet1" }
+        ];
     }
+    RecordsPage.prototype.RecordSelected = function (item) {
+        var toast = this.toastCtrl.create({
+            message: item.name + " Selected",
+            duration: 2500,
+        });
+        toast.present();
+    };
+    RecordsPage.prototype.viewRecord = function (item) {
+        this.navCtrl.push(ViewerPage, { record: item });
+    };
     RecordsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-records',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n      Records\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <ion-segment [(ngModel)]="items">\n      <ion-segment-button value="income">\n        Income\n      </ion-segment-button>\n      <ion-segment-button value="bills">\n        Bills\n      </ion-segment-button>\n      <ion-segment-button value="savings">\n        Savings\n      </ion-segment-button>\n      <ion-segment-button value="creditCards">\n        Cards\n      </ion-segment-button>\n      <ion-segment-button value="misc">\n        Misc.\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n\n  <div [ngSwitch]="items">\n    <ion-list *ngSwitchCase="\'income\'">\n      <ion-item>\n        <h2>Income</h2>\n      </ion-item>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'bills\'">\n      <ion-item>\n        <h2>Bills</h2>\n      </ion-item>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'savings\'">\n      <ion-item>\n        <h2>Savings</h2>\n      </ion-item>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'creditCards\'">\n      <ion-item>\n        <h2>Credit Cards</h2>\n      </ion-item>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'misc\'">\n      <ion-item>\n        <h2>Misc</h2>\n      </ion-item>\n    </ion-list>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/
+            selector: 'page-records',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n      Records\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <!--Tabs for each section of records-->\n    <ion-segment [(ngModel)]="records">\n      <ion-segment-button value="income">\n        Income\n      </ion-segment-button>\n      <ion-segment-button value="bills">\n        Bills\n      </ion-segment-button>\n      <ion-segment-button value="savings">\n        Savings\n      </ion-segment-button>\n      <ion-segment-button value="creditCards">\n        Cards\n      </ion-segment-button>\n      <ion-segment-button value="misc">\n        Misc.\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n\n  <!--Tab data -->\n  <div [ngSwitch]="records">\n    <ion-list *ngSwitchCase="\'income\'">\n      <button ion-item *ngFor="let item of income" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'bills\'">\n      <button ion-item *ngFor="let item of bills" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'savings\'">\n      <button ion-item *ngFor="let item of savings" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'creditCards\'">\n      <button ion-item *ngFor="let item of creditCards" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'misc\'">\n      <button ion-item *ngFor="let item of misc" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]])
     ], RecordsPage);
     return RecordsPage;
+}());
+
+var ViewerPage = /** @class */ (function () {
+    function ViewerPage(params) {
+        this.record = params.data.record;
+    }
+    ViewerPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{record.name}}: {{record.id}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  I am the Item Viewer Page!<br>\n  Nice to meet you :)\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]])
+    ], ViewerPage);
+    return ViewerPage;
 }());
 
 //# sourceMappingURL=records.js.map
@@ -337,6 +396,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -345,6 +405,7 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_5__pages_records_records__["a" /* RecordsPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_records_records__["b" /* ViewerPage */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_profile_profile__["a" /* ProfilePage */],
                 __WEBPACK_IMPORTED_MODULE_6__pages_budget_budget__["a" /* BudgetPage */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__["a" /* DashboardPage */],
@@ -360,6 +421,7 @@ var AppModule = /** @class */ (function () {
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_5__pages_records_records__["a" /* RecordsPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_records_records__["b" /* ViewerPage */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_profile_profile__["a" /* ProfilePage */],
                 __WEBPACK_IMPORTED_MODULE_6__pages_budget_budget__["a" /* BudgetPage */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__["a" /* DashboardPage */],
@@ -416,7 +478,7 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/app/app.html"*/'<ion-menu [content]="mycontent">\n    <ion-header padding>\n        <ion-title>Create</ion-title>\n    </ion-header>\n    <ion-content padding>\n        <button ion-button block clear><ion-icon name="cash"></ion-icon>Income</button>\n        <button ion-button block clear><ion-icon name="receipt"></ion-icon>Bill</button>\n        <button ion-button block clear><ion-icon name="card"></ion-icon>Credit Card</button>\n        <button ion-button block clear><ion-icon name="wallet"></ion-icon>Savings</button>\n        <button ion-button block clear><ion-icon name="star"></ion-icon>Misc.</button>\n    </ion-content>\n    <ion-footer>\n        <ion-toolbar>\n            <button ion-button full clear><ion-icon name="settings"></ion-icon> Settings</button>\n        </ion-toolbar>\n    </ion-footer>\n</ion-menu>\n<ion-nav #mycontent [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());

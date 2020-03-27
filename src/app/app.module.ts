@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { RecordsPage } from '../pages/records/records';
+import { ViewerPage } from '../pages/records/records';
 import { BudgetPage } from '../pages/budget/budget';
 import { ProfilePage } from '../pages/profile/profile';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -18,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     RecordsPage,
+    ViewerPage,
     ProfilePage,
     BudgetPage,
     DashboardPage,
@@ -31,6 +33,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     RecordsPage,
+    ViewerPage,
     ProfilePage,
     BudgetPage,
     DashboardPage,

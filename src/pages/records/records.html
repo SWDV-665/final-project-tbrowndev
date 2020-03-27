@@ -11,7 +11,8 @@
 
 <ion-content padding>
   <div>
-    <ion-segment [(ngModel)]="items">
+    <!--Tabs for each section of records-->
+    <ion-segment [(ngModel)]="records">
       <ion-segment-button value="income">
         Income
       </ion-segment-button>
@@ -30,31 +31,32 @@
     </ion-segment>
   </div>
 
-  <div [ngSwitch]="items">
+  <!--Tab data -->
+  <div [ngSwitch]="records">
     <ion-list *ngSwitchCase="'income'">
-      <ion-item>
-        <h2>Income</h2>
-      </ion-item>
+      <button ion-item *ngFor="let item of income" (click) = "viewRecord(item)">
+        {{item.name}}
+      </button>
     </ion-list>
     <ion-list *ngSwitchCase="'bills'">
-      <ion-item>
-        <h2>Bills</h2>
-      </ion-item>
+      <button ion-item *ngFor="let item of bills" (click) = "viewRecord(item)">
+        {{item.name}}
+      </button>
     </ion-list>
     <ion-list *ngSwitchCase="'savings'">
-      <ion-item>
-        <h2>Savings</h2>
-      </ion-item>
+      <button ion-item *ngFor="let item of savings" (click) = "viewRecord(item)">
+        {{item.name}}
+      </button>
     </ion-list>
     <ion-list *ngSwitchCase="'creditCards'">
-      <ion-item>
-        <h2>Credit Cards</h2>
-      </ion-item>
+      <button ion-item *ngFor="let item of creditCards" (click) = "viewRecord(item)">
+        {{item.name}}
+      </button>
     </ion-list>
     <ion-list *ngSwitchCase="'misc'">
-      <ion-item>
-        <h2>Misc</h2>
-      </ion-item>
+      <button ion-item *ngFor="let item of misc" (click) = "viewRecord(item)">
+        {{item.name}}
+      </button>
     </ion-list>
   </div>
 
