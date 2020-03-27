@@ -10,41 +10,35 @@ export class DashboardPage {
 
   title = "Dashboard"
   upcomingTitle = "Upcoming Bills Due";
-  
+
   bills = [
     {
       name:"Bill 1",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     },
     {
       name:"Bill 2",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     },
     {
       name:"Bill 3",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     },
     {
       name:"Bill 4",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     },
     {
       name:"Bill 5",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     },
     {
       name:"Bill 6",
-      description: "decription",
       duedate: "3/28/2020",
       amountdue:123.45
     }
