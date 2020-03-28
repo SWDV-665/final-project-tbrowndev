@@ -103,36 +103,17 @@ var DashboardPage = /** @class */ (function () {
         this.title = "Dashboard";
         this.upcomingTitle = "Upcoming Bills Due";
         this.bills = [
-            {
-                name: "Bill 1",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            },
-            {
-                name: "Bill 2",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            },
-            {
-                name: "Bill 3",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            },
-            {
-                name: "Bill 4",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            },
-            {
-                name: "Bill 5",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            },
-            {
-                name: "Bill 6",
-                duedate: "3/28/2020",
-                amountdue: 123.45
-            }
+            { name: "NetFlix", id: "NETF865", duedate: "3/28/2020", amountdue: 10.99 },
+            { name: "Hulu", id: "HU56", duedate: "3/28/2020", amountdue: 7.99 },
+            { name: "Electric", id: "ELE867", duedate: "3/28/2020", amountdue: 103.25 },
+            { name: "Rent", id: "APRT124", duedate: "3/28/2020", amountdue: 945.00 },
+            { name: "Gas", id: "GAS90", duedate: "3/28/2020", amountdue: 23.34 },
+            { name: "Water", id: "WT56", duedate: "3/28/2020", amountdue: 22.56 },
+            { name: "Sallie Mae (Student Loan)", id: "LODWS", duedate: "3/28/2020", amountdue: 264.23 },
+            { name: "Sewer", id: "SERHT5", duedate: "3/28/2020", amountdue: 42.00 },
+            { name: "Internet (Charter)", id: "INET43", duedate: "3/28/2020", amountdue: 78.00 },
+            { name: "Cell Phone (AT&T)", id: "CPATG6", duedate: "3/28/2020", amountdue: 143.54 },
+            { name: "Cable (Charter)", id: "CBL226", duedate: "3/28/2020", amountdue: 44.26 }
         ];
         this.cards = [
             {
@@ -174,11 +155,12 @@ var DashboardPage = /** @class */ (function () {
     };
     DashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{title}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-scroll scrollX="true" direction="x">\n    <ion-card class="ion-card-square" *ngFor="let card of cards">\n      <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>\n        <div class="card-title">{{card.name}}</div>\n        <div class="card-subtitle">${{card.total}}</div>\n      </button>\n    </ion-card>\n  </ion-scroll>\n\n  <h2 style="text-align: center;">\n    {{upcomingTitle}}\n  </h2>\n  <ion-list>\n    <!--Display a list of item objects-->\n    <ion-item-sliding *ngFor="let bill of bills; let i = index">\n      <ion-item>\n        <ion-grid>\n          <ion-row style="height: 30px;">\n            <ion-col col-2>\n              <ion-avatar>\n                <ion-icon name="cash"></ion-icon>\n              </ion-avatar>\n            </ion-col>\n            <ion-col col-6 style="font-size: large;vertical-align: middle;">\n              {{bill.name}}\n            </ion-col>\n            <ion-col col-4 style="text-align: right;font-size: small;">\n              {{bill.duedate}}<br>\n              <h3 style="color: red; font-weight: bold;">${{bill.amountdue}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="markPaid(bill, index)">\n        <button ion-button expandable (click)="markPaid(bill, index)">\n          <!--ion-icon name="checkmark"></ion-icon>-->\n          Mark Paid\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/
+            selector: 'page-dashboard',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{title}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-scroll scrollX="true" direction="x">\n    <ion-card class="ion-card-square" *ngFor="let card of cards">\n      <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>\n        <div class="card-title">{{card.name}}</div>\n        <div class="card-subtitle">${{card.total}}</div>\n      </button>\n    </ion-card>\n  </ion-scroll>\n\n  <h2 style="text-align: center;">\n    {{upcomingTitle}}\n  </h2>\n  <ion-list>\n    <!--Display a list of item objects-->\n    <ion-item-sliding *ngFor="let bill of bills; let i = index">\n      <ion-item>\n        <ion-grid>\n          <ion-row style="height: 30px;">\n            <ion-col col-1>\n              <ion-avatar>\n                <ion-icon name="cash"></ion-icon>\n              </ion-avatar>\n            </ion-col>\n            <ion-col col-7 style="font-size: medium;vertical-align: middle;">\n              {{bill.name}}\n            </ion-col>\n            <ion-col col-4 style="text-align: right;font-size: small;">\n              {{bill.duedate}}<br>\n              <h3 style="color: red; font-weight: bold;">${{bill.amountdue}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="markPaid(bill, index)">\n        <button ion-button expandable (click)="markPaid(bill, index)">\n          <!--ion-icon name="checkmark"></ion-icon>-->\n          Mark Paid\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]) === "function" && _b || Object])
     ], DashboardPage);
     return DashboardPage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=dashboard.js.map
@@ -212,36 +194,36 @@ var RecordsPage = /** @class */ (function () {
         //Sets income as the selected section
         this.records = "income";
         this.income = [
-            { name: "Income 1", id: "kjhet1" },
-            { name: "Income 2", id: "kjhet1" }
+            { name: "Charter Tech Support", id: "CRTKCG" },
+            { name: "Web Designer", id: "WD73R" }
         ];
         this.bills = [
-            { name: "Bill 1", id: "kjhet1" },
-            { name: "Bill 2", id: "kjhet1" },
-            { name: "Bill 3", id: "kjhet1" },
-            { name: "Bill 4", id: "kjhet1" },
-            { name: "Bill 5", id: "kjhet1" },
-            { name: "Bill 6", id: "kjhet1" },
-            { name: "Bill 7", id: "kjhet1" },
-            { name: "Bill 8", id: "kjhet1" },
-            { name: "Bill 9", id: "kjhet1" },
-            { name: "Bill 10", id: "kjhet1" },
-            { name: "Bill 11", id: "kjhet1" }
+            { name: "NetFlix", id: "NETF865" },
+            { name: "Hulu", id: "HU56" },
+            { name: "Electric", id: "ELE867" },
+            { name: "Rent", id: "APRT124" },
+            { name: "Gas", id: "GAS90" },
+            { name: "Water", id: "WT56" },
+            { name: "Sallie Mae (Student Loan)", id: "LODWS" },
+            { name: "Sewer", id: "SERHT5" },
+            { name: "Internet (Charter)", id: "INET43" },
+            { name: "Cell Phone (AT&T)", id: "CPATG6" },
+            { name: "Cable (Charter)", id: "CBL226" }
         ];
         this.savings = [
-            { name: "Saving Account 1", id: "kjhet1" },
-            { name: "Saving Account 2", id: "kjhet1" },
-            { name: "Saving Account 3", id: "kjhet1" },
-            { name: "Saving Account 4", id: "kjhet1" }
+            { name: "Christmas Fund", id: "CF845" },
+            { name: "Primary Savings", id: "01PS" },
+            { name: "Travel Fund", id: "TRAVEL" },
+            { name: "Emergency", id: "EMER911" }
         ];
         this.creditCards = [
-            { name: "Credit Card 1", id: "kjhet1" },
-            { name: "Credit Card 2", id: "kjhet1" }
+            { name: "Travel Rewards", id: "REWARD39" },
+            { name: "Master Credit", id: "MASTERC" }
         ];
         this.misc = [
-            { name: "Misc. 1", id: "kjhet1" },
-            { name: "Misc. 2", id: "kjhet1" },
-            { name: "Misc. 3", id: "kjhet1" }
+            { name: "401K", id: "93G6" },
+            { name: "Stock", id: "NJS3DF" },
+            { name: "CDs", id: "BSWW612" }
         ];
     }
     RecordsPage.prototype.RecordSelected = function (item) {
@@ -258,9 +240,10 @@ var RecordsPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-records',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>\n      Records\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <!--Tabs for each section of records-->\n    <ion-segment [(ngModel)]="records">\n      <ion-segment-button value="income">\n        Income\n      </ion-segment-button>\n      <ion-segment-button value="bills">\n        Bills\n      </ion-segment-button>\n      <ion-segment-button value="savings">\n        Savings\n      </ion-segment-button>\n      <ion-segment-button value="creditCards">\n        Cards\n      </ion-segment-button>\n      <ion-segment-button value="misc">\n        Misc.\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n\n  <!--Tab data -->\n  <div [ngSwitch]="records">\n    <ion-list *ngSwitchCase="\'income\'">\n      <button ion-item *ngFor="let item of income" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'bills\'">\n      <button ion-item *ngFor="let item of bills" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'savings\'">\n      <button ion-item *ngFor="let item of savings" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'creditCards\'">\n      <button ion-item *ngFor="let item of creditCards" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'misc\'">\n      <button ion-item *ngFor="let item of misc" (click) = "viewRecord(item)">\n        {{item.name}}\n      </button>\n    </ion-list>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]) === "function" && _b || Object])
     ], RecordsPage);
     return RecordsPage;
+    var _a, _b;
 }());
 
 var ViewerPage = /** @class */ (function () {
@@ -268,11 +251,12 @@ var ViewerPage = /** @class */ (function () {
         this.record = params.data.record;
     }
     ViewerPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{record.name}}: {{record.id}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  I am the Item Viewer Page!<br>\n  Nice to meet you :)\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{record.name}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  I am the Item Viewer Page!<br>\n  Nice to meet you :)\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/recordDetails.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]) === "function" && _a || Object])
     ], ViewerPage);
     return ViewerPage;
+    var _a;
 }());
 
 //# sourceMappingURL=records.js.map

@@ -12,36 +12,36 @@ export class RecordsPage {
   records: string = "income";
 
   income = [
-    {name: "Income 1", id: "kjhet1"},
-    {name: "Income 2", id: "kjhet1"}
+    {name: "Charter Tech Support", id: "CRTKCG"},
+    {name: "Web Designer", id: "WD73R"}
   ]
   bills = [
-    {name: "Bill 1", id: "kjhet1"},
-    {name: "Bill 2", id: "kjhet1"},
-    {name: "Bill 3", id: "kjhet1"},
-    {name: "Bill 4", id: "kjhet1"},
-    {name: "Bill 5", id: "kjhet1"},
-    {name: "Bill 6", id: "kjhet1"},
-    {name: "Bill 7", id: "kjhet1"},
-    {name: "Bill 8", id: "kjhet1"},
-    {name: "Bill 9", id: "kjhet1"},
-    {name: "Bill 10", id: "kjhet1"},
-    {name: "Bill 11", id: "kjhet1"}
+    {name: "NetFlix", id: "NETF865"},
+    {name: "Hulu", id: "HU56"},
+    {name: "Electric", id: "ELE867"},
+    {name: "Rent", id: "APRT124"},
+    {name: "Gas", id: "GAS90"},
+    {name: "Water", id: "WT56"},
+    {name: "Sallie Mae (Student Loan)", id: "LODWS"},
+    {name: "Sewer", id: "SERHT5"},
+    {name: "Internet (Charter)", id: "INET43"},
+    {name: "Cell Phone (AT&T)", id: "CPATG6"},
+    {name: "Cable (Charter)", id: "CBL226"}
   ]
   savings = [
-    {name: "Saving Account 1", id: "kjhet1"},
-    {name: "Saving Account 2", id: "kjhet1"},
-    {name: "Saving Account 3", id: "kjhet1"},
-    {name: "Saving Account 4", id: "kjhet1"}
+    {name: "Christmas Fund", id: "CF845"},
+    {name: "Primary Savings", id: "01PS"},
+    {name: "Travel Fund", id: "TRAVEL"},
+    {name: "Emergency", id: "EMER911"}
   ]
   creditCards = [
-    {name: "Credit Card 1", id: "kjhet1"},
-    {name: "Credit Card 2", id: "kjhet1"}
+    {name: "Travel Rewards", id: "REWARD39"},
+    {name: "Master Credit", id: "MASTERC"}
   ]
   misc = [
-    {name: "Misc. 1", id: "kjhet1"},
-    {name: "Misc. 2", id: "kjhet1"},
-    {name: "Misc. 3", id: "kjhet1"}
+    {name: "401K", id: "93G6"},
+    {name: "Stock", id: "NJS3DF"},
+    {name: "CDs", id: "BSWW612"}
   ]
   constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
     
