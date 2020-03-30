@@ -1,12 +1,46 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      {{record.name}}
-    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  I am the Item Viewer Page!<br>
-  Nice to meet you :)
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>Name</ion-list-header>
+    <ion-item>
+      <ion-input type="text" placeholder="Name" value="{{record.name}}"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Details
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Auto Pay</ion-label>
+      <ion-toggle checked="{{record.autopay}}"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date Due</ion-label>
+      <ion-datetime pickerFormat="MMMM DD" displayFormat="MMM DD" placeholder="Select Date" [(ngModel)]="record.duedate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" placeholder="Amount (Optional)" value="{{record.amount}}" ></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Past Payments
+    </ion-list-header>
+    <ion-item>Previous Payment 1</ion-item>
+    <ion-item>Previous Payment 2</ion-item>
+    <ion-item>Previous Payment 3</ion-item>
+    <ion-item>Previous Payment 4</ion-item>
+    <ion-item>Previous Payment 5</ion-item>
+    <ion-item>Previous Payment 6</ion-item>
+    <ion-item>Previous Payment 7</ion-item>
+    <ion-item>Previous Payment 8</ion-item>
+    <ion-item>Previous Payment 9</ion-item>
+    <ion-item>Previous Payment 10</ion-item>
+    <ion-item>Previous Payment 11</ion-item>
+  </ion-list>
 </ion-content>
