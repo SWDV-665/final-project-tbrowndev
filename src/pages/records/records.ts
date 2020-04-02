@@ -17,19 +17,19 @@ export class RecordsPage {
   }
 
   loadBills(){
-    this.dataService.getBills();
+    return this.dataService.getBills();
   }
   loadIncome(){
-    this.dataService.getIncome();
+    return this.dataService.getIncome();
   }
   loadCreditCards(){
-    this.dataService.getCreditCards();
+    return this.dataService.getCreditCards();
   }
   loadSavings(){
-    this.dataService.getSavings();
+    return this.dataService.getSavings();
   }
   loadMisc(){
-    this.dataService.getMisc();
+    return this.dataService.getMisc();
   }
 
   RecordSelected(item) {

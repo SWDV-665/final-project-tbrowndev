@@ -22,6 +22,7 @@
   </h2>
   <ion-list>
     <!--Display a list of item objects-->
+    <h6 class="no-item" *ngIf="loadBills().length === 0">Whoo! No Upcoming Bills!</h6>
     <ion-item-sliding *ngFor="let bill of loadBills(); let i = index">
       <ion-item>
         <ion-grid>
@@ -36,7 +37,7 @@
             </ion-col>
             <ion-col col-4 style="text-align: right;font-size: small;">
               {{bill.duedate}}<br>
-              <h3 style="color: red; font-weight: bold;">${{bill.amountdue}}</h3>
+              <h3 style="color: red; font-weight: bold;">${{bill.amount}}</h3>
             </ion-col>
           </ion-row>
         </ion-grid>

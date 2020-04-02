@@ -17,10 +17,10 @@ export class DashboardPage {
   }
 
   loadCards(){
-    this.dataService.getCards();
+    return this.dataService.getCards();
   }
   loadBills(){
-    this.dataService.getBills();
+    return this.dataService.getBills();
   }
 
   markPaid(bill, index){
