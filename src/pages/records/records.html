@@ -34,27 +34,27 @@
   <!--Tab data -->
   <div [ngSwitch]="records">
     <ion-list *ngSwitchCase="'income'">
-      <button ion-item *ngFor="let item of income" (click) = "viewRecord(item)">
+      <button ion-item *ngFor="let item of loadIncome()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>
     <ion-list *ngSwitchCase="'bills'">
-      <button ion-item *ngFor="let item of bills" (click) = "viewRecord(item)">
+      <button ion-item *ngFor="let item of loadBills()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>
     <ion-list *ngSwitchCase="'savings'">
-      <button ion-item *ngFor="let item of savings" (click) = "viewRecord(item)">
+      <button ion-item *ngFor="let item of loadSavings()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>
     <ion-list *ngSwitchCase="'creditCards'">
-      <button ion-item *ngFor="let item of creditCards" (click) = "viewRecord(item)">
+      <button ion-item *ngFor="let item of loadCreditCards()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>
     <ion-list *ngSwitchCase="'misc'">
-      <button ion-item *ngFor="let item of misc" (click) = "viewRecord(item)">
+      <button ion-item *ngFor="let item of loadMisc()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>

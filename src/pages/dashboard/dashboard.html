@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-scroll scrollX="true" direction="x">
-    <ion-card class="ion-card-square" *ngFor="let card of cards">
+    <ion-card class="ion-card-square" *ngFor="let card of loadCards()">
       <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>
         <div class="card-title">{{card.name}}</div>
         <div class="card-subtitle">${{card.total}}</div>
@@ -22,7 +22,7 @@
   </h2>
   <ion-list>
     <!--Display a list of item objects-->
-    <ion-item-sliding *ngFor="let bill of bills; let i = index">
+    <ion-item-sliding *ngFor="let bill of loadBills(); let i = index">
       <ion-item>
         <ion-grid>
           <ion-row style="height: 30px;">
