@@ -1,45 +1,48 @@
 page-dashboard {
-    
-}
-
-.card-title {
-    position: absolute;
-    top: 36%;
-    font-size: 1.4em;
-    width: 100%;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-}
-
-.card-subtitle {
-    font-size: .8em;
-    position: absolute;
-    top: 52%;
-    width: 100%;
-    color: rgb(0, 0, 0);
-}
-
-.header-group{
-    font-size: 2.0em;
-    font-weight: bold;
-    text-align: center;
-    height: 40px;
-}
-
-.scroll-zoom-wrapper {
-    white-space: nowrap;
-}
-
-.ion-card-square {
-    height: auto;
-    width: 190pt !important;
-    margin-left: 3.0em !important;
-    display: inline-block;
-}
-
-ion-scroll {
-    height: 180pt;
-    .scroll-content {
-        padding: 0px !important;
+    .no-item {
+        color: lightgray;
+        text-align: center;
     }
+    .card-title {
+        position: absolute;
+        top: 36%;
+        font-size: 1.4em;
+        width: 100%;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+    
+    .card-subtitle {
+        font-size: .8em;
+        position: absolute;
+        top: 52%;
+        width: 100%;
+        color: rgb(0, 0, 0);
+    }
+    
+    .header-group{
+        font-size: 2.0em;
+        font-weight: bold;
+        text-align: center;
+        height: 40px;
+    }
+    
+    .scroll-zoom-wrapper {
+        white-space: nowrap;
+    }
+    
+    .ion-card-square {
+        height: auto;
+        width: 190pt !important;
+        margin-left: 3.0em !important;
+        display: inline-block;
+    }
+    
+    ion-scroll {
+        height: 180pt;
+        .scroll-content {
+            padding: 0px !important;
+        }
+    }
+       
 }

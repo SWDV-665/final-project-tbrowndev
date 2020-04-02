@@ -20,10 +20,11 @@ export class DashboardPage {
     return this.dataService.getCards();
   }
   loadBills(){
-    return this.dataService.getBills();
+    return this.dataService.getUpcomingBills();
   }
 
   markPaid(bill, index){
+    this.dataService.payBill(index)
     const toast = this.toastCtrl.create({
       message: bill.name + " Marked as Paid",
       duration: 5000,

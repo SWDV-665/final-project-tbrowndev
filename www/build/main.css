@@ -47298,7 +47298,12 @@ ion-navbar.toolbar {
   min-height: 46px;
 }
 
-.card-title {
+page-dashboard .no-item {
+  color: lightgray;
+  text-align: center;
+}
+
+page-dashboard .card-title {
   position: absolute;
   top: 36%;
   font-size: 1.4em;
@@ -47307,7 +47312,7 @@ ion-navbar.toolbar {
   color: black;
 }
 
-.card-subtitle {
+page-dashboard .card-subtitle {
   font-size: .8em;
   position: absolute;
   top: 52%;
@@ -47315,28 +47320,28 @@ ion-navbar.toolbar {
   color: black;
 }
 
-.header-group {
+page-dashboard .header-group {
   font-size: 2.0em;
   font-weight: bold;
   text-align: center;
   height: 40px;
 }
 
-.scroll-zoom-wrapper {
+page-dashboard .scroll-zoom-wrapper {
   white-space: nowrap;
 }
 
-.ion-card-square {
+page-dashboard .ion-card-square {
   height: auto;
   width: 190pt !important;
   margin-left: 3.0em !important;
   display: inline-block;
 }
 
-ion-scroll {
+page-dashboard ion-scroll {
   height: 180pt;
 }
 
-ion-scroll .scroll-content {
+page-dashboard ion-scroll .scroll-content {
   padding: 0px !important;
 }

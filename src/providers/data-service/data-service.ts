@@ -9,10 +9,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataServiceProvider {
 
+  activeUser = {
+    name: "John Smith",
+    email: "jsmith@me.com",
+    phone: 3428970856
+  };
   income = [
     { name: "Charter Tech Support", id: "CRTKCG", amount: 1756.04, autopay: false },
     { name: "Web Designer", id: "WD73R", amount: 465.87, autopay: false }
-  ]
+  ];
   bills = [
     { name: "NetFlix", id: "NETF865", duedate: "3/28/2020", amount: 10.99, autopay: true },
     { name: "Hulu", id: "HU56", duedate: "3/28/2020", amount: 7.99, autopay: true },
@@ -25,6 +30,13 @@ export class DataServiceProvider {
     { name: "Internet (Charter)", id: "INET43", duedate: "3/28/2020", amount: 78.00, autopay: true },
     { name: "Cell Phone (AT&T)", id: "CPATG6", duedate: "3/28/2020", amount: 143.54, autopay: false },
     { name: "Cable (Charter)", id: "CBL226", duedate: "3/28/2020", amount: 44.26, autopay: false }
+  ];
+  upcomingBills = [
+    { name: "NetFlix", id: "NETF865", duedate: "3/28/2020", amount: 10.99, autopay: true },
+    { name: "Hulu", id: "HU56", duedate: "3/28/2020", amount: 7.99, autopay: true },
+    { name: "Electric", id: "ELE867", duedate: "3/28/2020", amount: 103.25, autopay: true },
+    { name: "Rent", id: "APRT124", duedate: "3/28/2020", amount: 1945.00, autopay: true },
+    { name: "Gas", id: "GAS90", duedate: "3/28/2020", amount: 23.34, autopay: true },
   ];
   savings = [
     { name: "Christmas Fund", id: "CF845", amount: 2000.00 },
@@ -74,11 +86,18 @@ export class DataServiceProvider {
     //console.log('Hello DataServiceProvider Provider');
   }
 
+  getUser(){
+    return this.activeUser;
+  }
+
   getIncome() {
     return this.income;
   }
   getBills() {
     return this.bills;
+  }
+  getUpcomingBills(){
+    return this.upcomingBills;
   }
   getSavings() {
     return this.savings;
@@ -94,7 +113,7 @@ export class DataServiceProvider {
   }
 
   payBill(index) {
-    this.bills.splice(index, 1);
+    this.upcomingBills.splice(index, 1);
   }
 
 }
