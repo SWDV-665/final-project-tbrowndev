@@ -24,7 +24,7 @@ export class DashboardPage {
   }
 
   markPaid(bill, index){
-    this.dataService.payBill(index)
+    this.dataService.payBill(bill, index)
     const toast = this.toastCtrl.create({
       message: bill.name + " Marked as Paid",
       duration: 5000,

@@ -112,7 +112,8 @@ export class DataServiceProvider {
     return this.cards;
   }
 
-  payBill(index) {
+  payBill(item, index) {
+    console.log(index)
     this.upcomingBills.splice(index, 1);
   }
 
