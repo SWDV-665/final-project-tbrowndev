@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { InputDialogServiceProvider } from '../../providers/input-dialog-service/input-dialog-service';
 
 @Component({
   selector: 'page-dashboard',
@@ -12,24 +13,27 @@ export class DashboardPage {
   title = "Dashboard"
   upcomingTitle = "Upcoming Bills Due";
 
-  constructor(public navCtrl: NavController, public toastCtrl:ToastController, public dataService: DataServiceProvider) {
+  constructor(public navCtrl: NavController, public toastCtrl:ToastController, public dataService: DataServiceProvider, public dialogService: InputDialogServiceProvider) {
     
   }
 
   loadCards(){
     return this.dataService.getCards();
   }
+  
   loadBills(){
     return this.dataService.getUpcomingBills();
   }
 
-  markPaid(bill, index){
-    this.dataService.payBill(bill, index)
-    const toast = this.toastCtrl.create({
-      message: bill.name + " Marked as Paid",
-      duration: 5000,
-      showCloseButton: true
-    });
-    toast.present();
+  markPaid(bill){
+    this.dialogService.presentPaymentModal(bill);
+  }
+
+  viewItem(item){
+    this.dialogService.presentRecordModal(item)
+  }
+
+  create(){
+    this.dialogService.presentCreateSheet();
   }
 }

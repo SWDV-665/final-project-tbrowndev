@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+        {{item.name}} 
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="close()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item>
+            <ion-input type="text" placeholder="Name" [(ngModel)]="item.name"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item *ngIf="item.type === 2 || item.type === 4">
+            <ion-label>Auto Pay</ion-label>
+            <ion-toggle [(ngModel)]="item.autopay"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="item.type === 2 || item.type === 4">
+            <ion-label>Date Due</ion-label>
+            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.duedate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.amount"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="item.type === 2 || item.type === 4"><!--if record is a bill or credit card-->
+        <ion-list-header>
+            Past Payments
+        </ion-list-header>
+        <ion-item>Previous Payment 1</ion-item>
+        <ion-item>Previous Payment 2</ion-item>
+        <ion-item>Previous Payment 3</ion-item>
+        <ion-item>Previous Payment 4</ion-item>
+    </ion-list>
+    <button ion-button block large (click)="updateRecord(item)">
+        Update
+    </button>
+</ion-content>

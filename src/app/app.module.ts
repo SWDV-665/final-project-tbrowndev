@@ -5,7 +5,6 @@ import { MyApp } from './app.component';
 
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { RecordsPage } from '../pages/records/records';
-import { ViewerPage } from '../pages/records/records';
 import { BudgetPage } from '../pages/budget/budget';
 import { ProfilePage } from '../pages/profile/profile';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -14,16 +13,20 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataServiceProvider } from '../providers/data-service/data-service';
+import { InputDialogServiceProvider } from '../providers/input-dialog-service/input-dialog-service';
+import { PaymentModal } from '../providers/input-dialog-service/input-dialog-service';
+import { RecordModal } from '../providers/input-dialog-service/input-dialog-service';
 
 
 @NgModule({
   declarations: [
     MyApp,
     RecordsPage,
-    ViewerPage,
+    RecordModal,
     ProfilePage,
     BudgetPage,
     DashboardPage,
+    PaymentModal,
     TabsPage
   ],
   imports: [
@@ -34,17 +37,19 @@ import { DataServiceProvider } from '../providers/data-service/data-service';
   entryComponents: [
     MyApp,
     RecordsPage,
-    ViewerPage,
+    RecordModal,
     ProfilePage,
     BudgetPage,
     DashboardPage,
+    PaymentModal,
     TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataServiceProvider
+    DataServiceProvider,
+    InputDialogServiceProvider
   ]
 })
 export class AppModule {}
