@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
-import { InputDialogServiceProvider } from '../../providers/input-dialog-service/input-dialog-service';
+import { RecordServiceProvider } from '../../providers/record-service/record-service';
+import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service';
 
 @Component({
   selector: 'page-records',
@@ -13,7 +14,7 @@ export class RecordsPage {
   //Sets income as the selected section
   records: string = "income";
 
-  constructor(public navCtrl: NavController, public dialogService: InputDialogServiceProvider, public toastCtrl: ToastController, public dataService: DataServiceProvider) {
+  constructor(public recordService: RecordServiceProvider, public navCtrl: NavController, public dialogService: DialogServiceProvider, public toastCtrl: ToastController, public dataService: DataServiceProvider) {
 
   }
 
@@ -22,15 +23,6 @@ export class RecordsPage {
   }
   loadIncome(){
     return this.dataService.getIncome();
-  }
-  loadCreditCards(){
-    return this.dataService.getCreditCards();
-  }
-  loadSavings(){
-    return this.dataService.getSavings();
-  }
-  loadMisc(){
-    return this.dataService.getMisc();
   }
 
   RecordSelected(item) {
@@ -43,7 +35,7 @@ export class RecordsPage {
   }
 
   viewRecord(item){
-    this.dialogService.presentRecordModal(item);
+    this.recordService.presentRecordModal(item);
   }
 
   create(){

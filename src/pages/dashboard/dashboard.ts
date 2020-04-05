@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
-import { InputDialogServiceProvider } from '../../providers/input-dialog-service/input-dialog-service';
+import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service';
+import { PaymentServiceProvider } from '../../providers/payment-service/payment-service';
+import { RecordServiceProvider } from '../../providers/record-service/record-service';
 
 @Component({
   selector: 'page-dashboard',
@@ -13,7 +15,7 @@ export class DashboardPage {
   title = "Dashboard"
   upcomingTitle = "Upcoming Bills Due";
 
-  constructor(public navCtrl: NavController, public toastCtrl:ToastController, public dataService: DataServiceProvider, public dialogService: InputDialogServiceProvider) {
+  constructor(public paymentService:PaymentServiceProvider, public recordService:RecordServiceProvider, public navCtrl: NavController, public toastCtrl:ToastController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
     
   }
 
@@ -22,15 +24,15 @@ export class DashboardPage {
   }
   
   loadBills(){
-    return this.dataService.getUpcomingBills();
+    return this.dataService.getBills();
   }
 
   markPaid(bill){
-    this.dialogService.presentPaymentModal(bill);
+    this.paymentService.presentPaymentModal(bill);
   }
 
   viewItem(item){
-    this.dialogService.presentRecordModal(item)
+    this.recordService.presentRecordModal(item)
   }
 
   create(){

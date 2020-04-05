@@ -13,9 +13,12 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataServiceProvider } from '../providers/data-service/data-service';
-import { InputDialogServiceProvider } from '../providers/input-dialog-service/input-dialog-service';
-import { PaymentModal } from '../providers/input-dialog-service/input-dialog-service';
-import { RecordModal } from '../providers/input-dialog-service/input-dialog-service';
+import { PaymentModal } from '../providers/payment-service/payment-service';
+import { RecordModal } from '../providers/record-service/record-service';
+import { PaymentServiceProvider } from '../providers/payment-service/payment-service';
+import { RecordServiceProvider } from '../providers/record-service/record-service';
+import { BudgetServiceProvider } from '../providers/budget-service/budget-service';
+import { DialogServiceProvider } from '../providers/dialog-service/dialog-service';
 
 
 @NgModule({
@@ -49,7 +52,10 @@ import { RecordModal } from '../providers/input-dialog-service/input-dialog-serv
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataServiceProvider,
-    InputDialogServiceProvider
+    PaymentServiceProvider,
+    RecordServiceProvider,
+    BudgetServiceProvider,
+    DialogServiceProvider
   ]
 })
 export class AppModule {}

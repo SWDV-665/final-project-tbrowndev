@@ -14,7 +14,7 @@
     <ion-card class="ion-card-square" *ngFor="let card of loadCards()">
       <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>
         <div class="card-title">{{card.name}}</div>
-        <div class="card-subtitle">{{card.total | currency}}</div>
+        <div class="card-subtitle">{{card.amount | currency}}</div>
       </button>
     </ion-card>
   </ion-scroll>
@@ -28,7 +28,7 @@
     <h6 class="no-item" *ngIf="loadBills().length === 0">Whoo! No Upcoming Bills!</h6>
     <ion-item-sliding *ngFor="let bill of loadBills()">
       <ion-item (click)="viewItem(bill)">
-        <ion-grid>
+        <ion-grid no-padding>
           <ion-row style="height: 30px;">
             <ion-col col-1>
               <ion-avatar>
@@ -39,7 +39,7 @@
               {{bill.name}}
             </ion-col>
             <ion-col col-4 style="text-align: right;font-size: small;">
-              {{bill.duedate | date}}<br>
+              {{bill.nextDueDate | date}}<br>
               <h3 style="color: red; font-weight: bold;">{{bill.amount | currency}}</h3>
             </ion-col>
           </ion-row>

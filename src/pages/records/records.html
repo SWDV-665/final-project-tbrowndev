@@ -21,15 +21,6 @@
       <ion-segment-button value="bills">
         Bills
       </ion-segment-button>
-      <ion-segment-button value="savings">
-        Savings
-      </ion-segment-button>
-      <ion-segment-button value="creditCards">
-        Cards
-      </ion-segment-button>
-      <ion-segment-button value="misc">
-        Misc.
-      </ion-segment-button>
     </ion-segment>
   </div>
 
@@ -42,21 +33,6 @@
     </ion-list>
     <ion-list *ngSwitchCase="'bills'">
       <button ion-item *ngFor="let item of loadBills()" (click) = "viewRecord(item)">
-        {{item.name}}
-      </button>
-    </ion-list>
-    <ion-list *ngSwitchCase="'savings'">
-      <button ion-item *ngFor="let item of loadSavings()" (click) = "viewRecord(item)">
-        {{item.name}}
-      </button>
-    </ion-list>
-    <ion-list *ngSwitchCase="'creditCards'">
-      <button ion-item *ngFor="let item of loadCreditCards()" (click) = "viewRecord(item)">
-        {{item.name}}
-      </button>
-    </ion-list>
-    <ion-list *ngSwitchCase="'misc'">
-      <button ion-item *ngFor="let item of loadMisc()" (click) = "viewRecord(item)">
         {{item.name}}
       </button>
     </ion-list>
