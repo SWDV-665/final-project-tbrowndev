@@ -25,6 +25,14 @@ export class RecordsPage {
     return this.dataService.getIncome();
   }
 
+  getPayTotal(){
+    return this.dataService.getPaystubTotal();
+  }
+
+  getBillTotal(){
+    return this.dataService.getBillTotal();
+  }
+
   RecordSelected(item) {
     const toast = this.toastCtrl.create({
       message: item.name + " Selected",

@@ -29,10 +29,11 @@ export class RecordServiceProvider {
 })
 export class RecordModal {
   item;
+  type;
 
   constructor(params: NavParams, public dataService: DataServiceProvider, public toastCtrl:ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
     this.item = params.data;
-    console.log(typeof this.item);
+    this.type = this.item.constructor.name;
   }
 
   //close payment modal

@@ -12,7 +12,7 @@
 </ion-header>
 
 <!--Bill Records Update-->
-<ion-content>
+<ion-content *ngIf="type === 'Bill'">
     <ion-list>
         <ion-item>
             <ion-input type="text" placeholder="Name" [(ngModel)]="item.name"></ion-input>
@@ -42,5 +42,39 @@
     </ion-list>
     <button ion-button block large (click)="updateRecord(item)">
         Update Bill
+    </button>
+</ion-content>
+
+<!--Paystub Records Update-->
+<ion-content *ngIf="type === 'Paystub'">
+    <ion-list>
+        <ion-item>
+            <ion-input type="text" placeholder="Name" [(ngModel)]="item.name"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Direct Deposit</ion-label>
+            <ion-toggle [(ngModel)]="item.isDirectDeposit"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Next Pay Date</ion-label>
+            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextPayDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.pay"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-list><!--if record is a bill or credit card-->
+        <ion-list-header>
+            Past Paystubs
+        </ion-list-header>
+        <ion-item>Previous Paystub 1</ion-item>
+        <ion-item>Previous Paystub 2</ion-item>
+        <ion-item>Previous Paystub 3</ion-item>
+        <ion-item>Previous Paystub 4</ion-item>
+    </ion-list>
+    <button ion-button block large (click)="updateRecord(item)">
+        Update Paystub
     </button>
 </ion-content>

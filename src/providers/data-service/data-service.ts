@@ -32,8 +32,8 @@ export class DataServiceProvider {
   ];
 
   SummaryCards = [
-    new Kompass.SummaryCard("Income", 0.00, "yellow"),
-    new Kompass.SummaryCard("Bills", 0.00, "purple")
+    new Kompass.SummaryCard("Income", this.getPaystubTotal(), "yellow"),
+    new Kompass.SummaryCard("Bills", this.getBillTotal(), "purple")
   ];
 
   constructor() {
@@ -61,6 +61,26 @@ export class DataServiceProvider {
 
   updateItem(item) {
     //this.items[this.items.indexOf(item)] = item;
+  }
+
+  getPaystubTotal(){
+    var total = 0.00;
+    this.paystubs.forEach(stub =>
+      {
+        total += stub.pay;
+      })
+
+    return total;
+  }
+
+  getBillTotal(){
+    var total = 0.00;
+    this.bills.forEach(bill =>
+      {
+        total += bill.amount;
+      })
+
+    return total;
   }
 
 }

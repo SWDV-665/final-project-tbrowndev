@@ -27,14 +27,52 @@
   <!--Tab data -->
   <div [ngSwitch]="records">
     <ion-list *ngSwitchCase="'income'">
-      <button ion-item *ngFor="let item of loadIncome()" (click) = "viewRecord(item)">
-        {{item.name}}
+      <button ion-item *ngFor="let item of loadIncome()" (click)="viewRecord(item)" no-padding>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7 style="font-size: small;">
+              {{item.name}}
+            </ion-col>
+            <ion-col col-5 text-right style="text-align: right;font-size: small;">
+              {{item.pay | currency}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </button>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-7>
+            Total
+          </ion-col>
+          <ion-col col-5 text-right style="text-align: right;font-size: small;">
+            {{getPayTotal() | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-list>
     <ion-list *ngSwitchCase="'bills'">
-      <button ion-item *ngFor="let item of loadBills()" (click) = "viewRecord(item)">
-        {{item.name}}
+      <button ion-item *ngFor="let item of loadBills()" (click)="viewRecord(item)" no-padding style="font-size: small;">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-7>
+              {{item.name}}
+            </ion-col>
+            <ion-col col-5 text-right style="text-align: right;font-size: small;">
+              {{item.amount | currency}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </button>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-7>
+            Total
+          </ion-col>
+          <ion-col col-5 text-right>
+            {{getBillTotal() | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-list>
   </div>
 
