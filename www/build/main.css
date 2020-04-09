@@ -47298,6 +47298,11 @@ ion-navbar.toolbar {
   min-height: 46px;
 }
 
+page-budget .no-item {
+  color: lightgray;
+  text-align: center;
+}
+
 page-dashboard .no-item {
   color: lightgray;
   text-align: center;

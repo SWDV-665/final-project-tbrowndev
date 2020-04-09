@@ -31,21 +31,12 @@ export class DataServiceProvider {
     new Kompass.Bill("Cable", "2020-03-28", 4, true, 43.67)
   ];
 
-  SummaryCards = [
-    new Kompass.SummaryCard("Income", this.getPaystubTotal(), "yellow"),
-    new Kompass.SummaryCard("Bills", this.getBillTotal(), "purple")
-  ];
-
   constructor() {
     //console.log('Hello DataServiceProvider Provider');
   }
 
   getUser() {
     return this.activeUser;
-  }
-
-  getCards(){
-    return this.SummaryCards;
   }
 
   getIncome() {

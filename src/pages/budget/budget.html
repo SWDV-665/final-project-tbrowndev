@@ -9,14 +9,34 @@
 <ion-content padding>
   <ion-card>
     <ion-item-group>
+      <h6 class="no-item" *ngIf="getBudgetItems().length === 0" padding-top>No Items in your budget :(</h6>
       <ion-item *ngFor="let item of getBudgetItems()">
         <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">
           <ion-icon name="close" color="red"></ion-icon>
         </button>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col col-9>
+            <ion-col col-10 style="font-size: small;">
               {{item.reference}}
+            </ion-col>
+            <ion-col col-2 *ngIf="item.constructor.name === 'Paystub'" style="font-size: small; text-align: right;">
+              {{item.pay | currency}}
+            </ion-col>
+            <ion-col col-2 *ngIf="item.constructor.name === 'Bill'" style="font-size: small; text-align: right;">
+              {{item.amount | currency}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col col-10 style="font-size: small;">
+              Total
+            </ion-col>
+            <ion-col col-2 style="font-size: small; text-align: right;">
+              {{totalBudget() | currency}}
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -31,10 +51,10 @@
       </button>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col col-9>
+          <ion-col col-10 style="font-size: small;">
             {{item.reference}}
           </ion-col>
-          <ion-col col-3>
+          <ion-col col-2 style="font-size: small; text-align: right;">
             {{item.pay | currency}}
           </ion-col>
         </ion-row>
@@ -49,10 +69,10 @@
       </button>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col col-9>
+          <ion-col col-10 style="font-size: small;">
             {{item.reference}}
           </ion-col>
-          <ion-col col-3>
+          <ion-col col-2 style="font-size: small; text-align: right;">
             {{item.amount | currency}}
           </ion-col>
         </ion-row>

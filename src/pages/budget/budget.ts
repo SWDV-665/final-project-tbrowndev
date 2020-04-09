@@ -19,6 +19,19 @@ export class BudgetPage {
 
   }
 
+  totalBudget(){
+    var total = 0.00;
+    this.budget.forEach(item =>{
+      if(item.constructor.name == 'Paystub'){
+        total += item.pay;
+      }
+      else{
+        total -= item.amount;
+      }
+    })
+    return total
+  }
+
   getBudgetItems(){
     return this.budget;
   }
@@ -41,13 +54,14 @@ export class BudgetPage {
 
   onBudgetItemClick(item) {
     this.budget.splice(this.budget.indexOf(item), 1);
-    console.log(item);
-    if (item.constructor.name = 'Paystub') {
+    if (item.constructor.name == 'Paystub') {
       this.income.push(item);
     }
     else {
       this.bills.push(item);
     }
   }
+
+  
 
 }
