@@ -10,14 +10,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-scroll scrollX="true" direction="x">
-    <ion-card class="ion-card-square" *ngFor="let card of loadCards()">
-      <button ion-button large style="height: 155pt; width: 180pt;" color={{card.color}}>
-        <div class="card-title">{{card.name}}</div>
-        <div class="card-subtitle">{{card.amount | currency}}</div>
-      </button>
-    </ion-card>
-  </ion-scroll>
 
   <h2 style="text-align: center;">
     {{upcomingTitle}}
@@ -36,7 +28,7 @@
               </ion-avatar>
             </ion-col>
             <ion-col col-7 style="font-size: medium;vertical-align: middle;">
-              {{bill.name}}
+              {{bill.reference}}
             </ion-col>
             <ion-col col-4 style="text-align: right;font-size: small;">
               {{bill.nextDueDate | date}}<br>

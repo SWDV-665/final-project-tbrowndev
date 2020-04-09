@@ -7,5 +7,57 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-item-group>
+      <ion-item *ngFor="let item of getBudgetItems()">
+        <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">
+          <ion-icon name="close" color="red"></ion-icon>
+        </button>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col col-9>
+              {{item.reference}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-group>
+  </ion-card>
+  <ion-item-group>
+    <ion-item-divider color="light">Income</ion-item-divider>
+    <ion-item *ngFor="let item of getIncomeItems()">
+      <button ion-button clear item-start icon-only (click)="onIncomeClick(item)">
+        <ion-icon name="add" color="green"></ion-icon>
+      </button>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col col-9>
+            {{item.reference}}
+          </ion-col>
+          <ion-col col-3>
+            {{item.pay | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light">Bills</ion-item-divider>
+    <ion-item *ngFor="let item of getBillItems()">
+      <button ion-button clear item-start icon-only (click)="onBillClick(item)">
+        <ion-icon name="add" color="green"></ion-icon>
+      </button>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col col-9>
+            {{item.reference}}
+          </ion-col>
+          <ion-col col-3>
+            {{item.amount | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-item-group>
 
 </ion-content>

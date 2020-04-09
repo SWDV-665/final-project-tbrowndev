@@ -15,27 +15,23 @@ export class DashboardPage {
   title = "Dashboard"
   upcomingTitle = "Upcoming Bills Due";
 
-  constructor(public paymentService:PaymentServiceProvider, public recordService:RecordServiceProvider, public navCtrl: NavController, public toastCtrl:ToastController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
-    
+  constructor(public paymentService: PaymentServiceProvider, public recordService: RecordServiceProvider, public navCtrl: NavController, public toastCtrl: ToastController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
   }
 
-  loadCards(){
-    return this.dataService.getCards();
-  }
-  
-  loadBills(){
+  loadBills() {
     return this.dataService.getBills();
   }
 
-  markPaid(bill){
+  markPaid(bill) {
     this.paymentService.presentPaymentModal(bill);
   }
 
-  viewItem(item){
+  viewItem(item) {
     this.recordService.presentRecordModal(item)
   }
 
-  create(){
+  create() {
     this.dialogService.presentCreateSheet();
   }
+
 }

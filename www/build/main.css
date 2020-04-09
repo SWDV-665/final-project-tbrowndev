@@ -47331,11 +47331,9 @@ page-dashboard .scroll-zoom-wrapper {
   white-space: nowrap;
 }
 
-page-dashboard .ion-card-square {
+page-dashboard .ion-card-calendar {
   height: auto;
-  width: 190pt !important;
-  margin-left: 3.0em !important;
-  display: inline-block;
+  width: auto !important;
 }
 
 page-dashboard ion-scroll {
