@@ -30,4 +30,12 @@ export namespace Kompass {
 
         }
     }
+
+    export class ManualItem{
+        constructor(
+            public reference: string,
+            public isExpense: boolean,
+            public amount: number){
+        }
+    }
 }

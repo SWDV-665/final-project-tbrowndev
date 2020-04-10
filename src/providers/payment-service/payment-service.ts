@@ -61,7 +61,7 @@ export class PaymentModal {
       content: "Marking Payment...",
     });
     loader.present();
-    this.dataService.payBill(item);
+    //this.dataService.payBill(item);
     loader.dismiss();
 
     this.viewCtrl.dismiss();

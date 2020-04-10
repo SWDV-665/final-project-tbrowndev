@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service'
+import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service'
+
 
 @Component({
   selector: 'page-budget',
@@ -8,58 +10,45 @@ import { DataServiceProvider } from '../../providers/data-service/data-service'
 })
 export class BudgetPage {
 
-  budget = [];
-  income = [];
-  bills = [];
-
-  constructor(public navCtrl: NavController, public dataService: DataServiceProvider) {
-
-    this.income = this.dataService.getIncome();
-    this.bills = this.dataService.getBills();
-
+  constructor(public navCtrl: NavController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
   }
 
   totalBudget(){
-    var total = 0.00;
-    this.budget.forEach(item =>{
-      if(item.constructor.name == 'Paystub'){
-        total += item.pay;
-      }
-      else{
-        total -= item.amount;
-      }
-    })
-    return total
+    return this.dataService.getTotalBudget();
+  }
+
+  getManualItems(){
+    return this.dataService.getManualItems();
   }
 
   getBudgetItems(){
-    return this.budget;
+    return this.dataService.getBudgetItems();
   }
   getIncomeItems(){
-    return this.income;
+    return this.dataService.getIncome();
   }
   getBillItems(){
-    return this.bills;
+    return this.dataService.getBills();
+  }
+
+  onNewManualItem(){
+    this.dialogService.presentManualTypeSheet();
+  }
+
+  onManualItemClick(item){
+    this.dataService.manualAddToBudget(item);
   }
 
   onIncomeClick(item) {
-    this.income.splice(this.income.indexOf(item), 1)
-    this.budget.push(item);
+    this.dataService.incomeAddToBudget(item);
   }
 
   onBillClick(item) {
-    this.bills.splice(this.bills.indexOf(item), 1)
-    this.budget.push(item);
+    this.dataService.billAddToBudget(item);
   }
 
   onBudgetItemClick(item) {
-    this.budget.splice(this.budget.indexOf(item), 1);
-    if (item.constructor.name == 'Paystub') {
-      this.income.push(item);
-    }
-    else {
-      this.bills.push(item);
-    }
+    this.dataService.removeItemFromBudget(item);
   }
 
   

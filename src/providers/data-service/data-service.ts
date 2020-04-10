@@ -31,8 +31,65 @@ export class DataServiceProvider {
     new Kompass.Bill("Cable", "2020-03-28", 4, true, 43.67)
   ];
 
+  manualItems = [];
+  budgetItems = [];
+
   constructor() {
-    //console.log('Hello DataServiceProvider Provider');
+  }
+
+  getTotalBudget(){
+    var total = 0.00;
+    this.budgetItems.forEach(item =>{
+      if(item.constructor.name == 'Paystub'){
+        total += item.pay;
+      }
+      else if (item.constructor.name == 'Bill'){
+        total -= item.amount;
+      }
+      else
+      {
+        if (item.isExpense){
+          total -= item.amount;
+        }
+        else
+        {
+          total += item.amount;
+        }
+      }
+    })
+    return total
+  }
+
+  manualAddToBudget(item){
+    this.manualItems.splice(this.manualItems.indexOf(item), 1);
+    this.budgetItems.push(item);
+  }
+
+  manualAddNewItem(item){
+    this.manualItems.push(item);
+  }
+
+  incomeAddToBudget(item){
+    this.paystubs.splice(this.paystubs.indexOf(item), 1)
+    this.budgetItems.push(item);
+  }
+
+  billAddToBudget(item){
+    this.bills.splice(this.bills.indexOf(item), 1)
+    this.budgetItems.push(item);
+  }
+
+  removeItemFromBudget(item){
+    this.budgetItems.splice(this.budgetItems.indexOf(item), 1);
+    if (item.constructor.name == 'Paystub') {
+      this.paystubs.push(item);
+    }
+    else if (item.constructor.name == 'Bill') {
+      this.bills.push(item);
+    }
+    else{
+      this.manualItems.push(item);
+    }
   }
 
   getUser() {
@@ -46,12 +103,12 @@ export class DataServiceProvider {
     return this.bills;
   }
 
-  payBill(item) {
-    this.bills.splice(this.bills.indexOf(item), 1)
+  getBudgetItems(){
+    return this.budgetItems;
   }
 
-  updateItem(item) {
-    //this.items[this.items.indexOf(item)] = item;
+  getManualItems(){
+    return this.manualItems;
   }
 
   getPaystubTotal(){

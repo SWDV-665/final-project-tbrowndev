@@ -42,7 +42,7 @@ export class RecordModal {
   }
 
   updateRecord(item){
-    this.dataService.updateItem(item);
+    //this.dataService.updateItem(item);
     this.close();
   }
 }
