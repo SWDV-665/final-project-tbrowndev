@@ -31,7 +31,9 @@ export class DialogServiceProvider {
         {
           name: 'amount',
           placeholder: 'Amount',
-          type: 'number'
+          type: 'number',
+          min: 0,
+          max: 999999
         },
       ],
       buttons: [

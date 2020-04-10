@@ -630,24 +630,31 @@ var DataServiceProvider = /** @class */ (function () {
             new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Cell Phone", "2020-03-28", 4, true, 122.42),
             new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Cable", "2020-03-28", 4, true, 43.67)
         ];
-        this.manualItems = [];
+        this.manualItems = [
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualItem("Income", false, 1234.56),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualItem("Expense", true, 123.45)
+        ];
         this.budgetItems = [];
     }
     DataServiceProvider.prototype.getTotalBudget = function () {
-        var total = 0.00;
+        var total = 0;
         this.budgetItems.forEach(function (item) {
             if (item.constructor.name == 'Paystub') {
                 total += item.pay;
+                console.log(typeof (item.pay));
             }
             else if (item.constructor.name == 'Bill') {
                 total -= item.amount;
+                console.log(typeof (item.amount));
             }
             else {
                 if (item.isExpense) {
                     total -= item.amount;
+                    console.log(typeof (item.amount));
                 }
                 else {
                     total += item.amount;
+                    console.log(typeof (item.amount));
                 }
             }
         });
@@ -936,7 +943,9 @@ var DialogServiceProvider = /** @class */ (function () {
                 {
                     name: 'amount',
                     placeholder: 'Amount',
-                    type: 'number'
+                    type: 'number',
+                    min: 0,
+                    max: 999999
                 },
             ],
             buttons: [
@@ -1012,9 +1021,10 @@ var DialogServiceProvider = /** @class */ (function () {
     };
     DialogServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object])
     ], DialogServiceProvider);
     return DialogServiceProvider;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=dialog-service.js.map

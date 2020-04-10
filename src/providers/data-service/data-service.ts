@@ -31,29 +31,36 @@ export class DataServiceProvider {
     new Kompass.Bill("Cable", "2020-03-28", 4, true, 43.67)
   ];
 
-  manualItems = [];
+  manualItems = [
+    new Kompass.ManualItem("Income", false, 1234.56),
+    new Kompass.ManualItem("Expense", true, 123.45)
+  ];
   budgetItems = [];
 
   constructor() {
   }
 
   getTotalBudget(){
-    var total = 0.00;
+    var total = 0;
     this.budgetItems.forEach(item =>{
       if(item.constructor.name == 'Paystub'){
         total += item.pay;
+        console.log(typeof(item.pay));
       }
       else if (item.constructor.name == 'Bill'){
         total -= item.amount;
+        console.log(typeof(item.amount));
       }
       else
       {
         if (item.isExpense){
           total -= item.amount;
+          console.log(typeof(item.amount));
         }
         else
         {
           total += item.amount;
+          console.log(typeof(item.amount));
         }
       }
     })
