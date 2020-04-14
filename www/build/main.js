@@ -212,28 +212,46 @@ var DashboardPage = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.dataService = dataService;
         this.dialogService = dialogService;
-        this.title = "Dashboard";
-        this.upcomingTitle = "Upcoming Bills Due";
     }
-    DashboardPage.prototype.loadBills = function () {
-        return this.dataService.getBills();
+    //NEW CONCEPT SECTION TO REPLACE ABOVE - DONE
+    /**
+     * gathers all upcoming bills from data service
+     */
+    DashboardPage.prototype.fetchUpcomingBills = function () {
+        return this.dataService.fetchUpcomingBills();
     };
-    DashboardPage.prototype.markPaid = function (bill) {
-        this.paymentService.presentPaymentModal(bill);
+    /**
+     * send bill to payment service modal
+     * @param item 'the item that will be paid'
+     *
+     */
+    DashboardPage.prototype.onMarkPaid = function (item) {
+        //this.paymentService.presentPaymentModal(item);
+        this.dialogService.featureNotAvaliableAlert();
     };
-    DashboardPage.prototype.viewItem = function (item) {
-        this.recordService.presentRecordModal(item);
+    /**
+     * send bill to record service modal
+     * @param item 'the item that user has selected to view'
+     */
+    DashboardPage.prototype.onItemClick = function (item) {
+        //this.recordService.presentRecordModal(item);
+        this.dialogService.featureNotAvaliableAlert();
     };
-    DashboardPage.prototype.create = function () {
-        this.dialogService.presentCreateSheet();
+    /**
+     * starts command for creation of new record item
+     */
+    DashboardPage.prototype.onCreateNew = function () {
+        //this.dialogService.presentCreateSheet();
+        this.dialogService.featureNotAvaliableAlert();
     };
     DashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-toolbar>\n    <ion-title>{{title}}</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <h2 style="text-align: center;">\n    {{upcomingTitle}}\n  </h2>\n  <hr>\n  <ion-list>\n    <!--Display a list of item objects-->\n    <h6 class="no-item" *ngIf="loadBills().length === 0">Whoo! No Upcoming Bills!</h6>\n    <ion-item-sliding *ngFor="let bill of loadBills()">\n      <ion-item (click)="viewItem(bill)">\n        <ion-grid no-padding>\n          <ion-row style="height: 30px;">\n            <ion-col col-1>\n              <ion-avatar>\n                <ion-icon name="cash"></ion-icon>\n              </ion-avatar>\n            </ion-col>\n            <ion-col col-7 style="font-size: medium;vertical-align: middle;">\n              {{bill.reference}}\n            </ion-col>\n            <ion-col col-4 style="text-align: right;font-size: small;">\n              {{bill.nextDueDate | date}}<br>\n              <h3 style="color: red; font-weight: bold;">{{bill.amount | currency}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="markPaid(bill)">\n        <button ion-button expandable (click)="markPaid(bill)">\n          <!--ion-icon name="checkmark"></ion-icon>-->\n          Mark Paid\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/
+            selector: 'page-dashboard',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-toolbar>\n    <ion-title>Dashboard</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="onCreateNew()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <h2 style="text-align: center;">\n    Remaining Bills Due this Month\n  </h2>\n  <hr>\n  <ion-list>\n    <!--Display a list of item objects-->\n    <h6 class="no-item" *ngIf="fetchUpcomingBills().length === 0">Whoo! No Upcoming Bills!</h6>\n    <ion-item-sliding *ngFor="let bill of fetchUpcomingBills()">\n      <ion-item (click)="onItemClick(bill)" class="item-layout">\n        <ion-grid>\n          <ion-row>\n            <ion-col col-8 class="item-title">\n              {{bill.title}}<br>\n              <p class="item-note">{{bill.description}}</p>\n            </ion-col>\n            <ion-col col-4 class="right-align-small-text">\n              {{bill.nextOccurenceDate | date}}\n              <h3 class="bill-amount">{{bill.amount | currency}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="onMarkPaid(bill)">\n        <button ion-button expandable (click)="onMarkPaid(bill)">\n          <!--ion-icon name="checkmark"></ion-icon>-->\n          Mark Paid\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/dashboard/dashboard.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_payment_service_payment_service__["b" /* PaymentServiceProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_record_service_record_service__["b" /* RecordServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__providers_payment_service_payment_service__["b" /* PaymentServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_payment_service_payment_service__["b" /* PaymentServiceProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__providers_record_service_record_service__["b" /* RecordServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_record_service_record_service__["b" /* RecordServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */]) === "function" && _f || Object])
     ], DashboardPage);
     return DashboardPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=dashboard.js.map
@@ -247,47 +265,82 @@ var DashboardPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Kompass; });
 var Kompass;
 (function (Kompass) {
-    var ActiveUser = /** @class */ (function () {
-        function ActiveUser(fullName, occupation, email, phone) {
-            this.fullName = fullName;
-            this.occupation = occupation;
+    // NEW CONCEPT TO REPLACE ABOVE - DONE
+    /**
+     * Creates all records utilized during runtime (Income, Bill, Manual Budget)
+     * @param title 'name of record'
+     * @param kind 'Type of record: 0: income; 1: bill'
+     * @param nextOccurenceDate 'Next Date Record will occur: string formatted as mm-dd-yyyy'
+     * @param occurenceLevel 'Frequency of record: 0:One Time:, 1: daily; 2: weekly; 3: bi-weekly; 4:monthly; 5:yearly'
+     * @param isAuto 'is this record set for direct deposit/ auto pay?'
+     * @param amount 'the amount set for the record'
+     * @param desc 'quick description of the record'
+     */
+    var Record = /** @class */ (function () {
+        function Record(title, kind, nextOccurenceDate, occurenceLevel, isAuto, amount, desc) {
+            this.inBudget = false;
+            this.title = title;
+            this.kind = kind;
+            this.nextOccurenceDate = nextOccurenceDate;
+            this.occurenceLevel = occurenceLevel;
+            this.isAuto = isAuto;
+            this.amount = amount;
+            this.description = desc;
+        }
+        return Record;
+    }());
+    Kompass.Record = Record;
+    /**
+     * create payment for use during runtime
+     * @param title 'Name of Bill'
+     * @param occurenceDate 'Occurence date of bill that user is paying for
+     * @param amount 'amount of bill for occurence date'
+     * @param payDate 'date user paid bill'
+     * @param payAmount 'amount user paying bill for occurence date'
+     * @param confNum 'Confirmation # of payment from external system'
+     */
+    var Payment = /** @class */ (function () {
+        function Payment(title, occurenceDate, amount, payDate, payAmount, confNum) {
+            this.title = title;
+            this.occurenceDate = occurenceDate;
+            this.amount = amount;
+            this.payDate = payDate;
+            this.payAmount = payAmount;
+            this.confNum = confNum;
+        }
+        return Payment;
+    }());
+    Kompass.Payment = Payment;
+    /**
+     * Creates all records utilized during runtime (Income, Bill, Manual Budget)
+     * @param title 'name of record'
+     * @param kind 'Type of record: 0: income; 1: expense'
+     * @param amount 'the amount set for the record'
+     */
+    var ManualBudgetItem = /** @class */ (function () {
+        function ManualBudgetItem(title, kind, amount) {
+            this.inBudget = false;
+            this.title = title;
+            this.kind = kind;
+            this.amount = amount;
+        }
+        return ManualBudgetItem;
+    }());
+    Kompass.ManualBudgetItem = ManualBudgetItem;
+    /**
+     * Creates User Profile for runtime use
+     */
+    var Profile = /** @class */ (function () {
+        function Profile(name, email, phone, nickname, jobtitle) {
+            this.name = name;
             this.email = email;
             this.phone = phone;
+            this.nickname = nickname;
+            this.jobTitle = jobtitle;
         }
-        return ActiveUser;
+        return Profile;
     }());
-    Kompass.ActiveUser = ActiveUser;
-    var Paystub = /** @class */ (function () {
-        function Paystub(reference, nextPayDate, occurenceLevel, isDirectDeposit, pay) {
-            this.reference = reference;
-            this.nextPayDate = nextPayDate;
-            this.occurenceLevel = occurenceLevel;
-            this.isDirectDeposit = isDirectDeposit;
-            this.pay = pay;
-        }
-        return Paystub;
-    }());
-    Kompass.Paystub = Paystub;
-    var Bill = /** @class */ (function () {
-        function Bill(reference, nextDueDate, occurenceLevel, isAutopay, amount) {
-            this.reference = reference;
-            this.nextDueDate = nextDueDate;
-            this.occurenceLevel = occurenceLevel;
-            this.isAutopay = isAutopay;
-            this.amount = amount;
-        }
-        return Bill;
-    }());
-    Kompass.Bill = Bill;
-    var ManualItem = /** @class */ (function () {
-        function ManualItem(reference, isExpense, amount) {
-            this.reference = reference;
-            this.isExpense = isExpense;
-            this.amount = amount;
-        }
-        return ManualItem;
-    }());
-    Kompass.ManualItem = ManualItem;
+    Kompass.Profile = Profile;
 })(Kompass || (Kompass = {}));
 //# sourceMappingURL=kompass-objects.js.map
 
@@ -328,38 +381,42 @@ var RecordsPage = /** @class */ (function () {
         //Sets income as the selected section
         this.records = "income";
     }
-    RecordsPage.prototype.loadBills = function () {
-        return this.dataService.getBills();
+    //NEW CONCEPT TO REPLACE ABOVE - DONE
+    RecordsPage.prototype.fetchBills = function () {
+        return this.dataService.fetchBills();
     };
-    RecordsPage.prototype.loadIncome = function () {
-        return this.dataService.getIncome();
+    RecordsPage.prototype.fetchBillTotal = function () {
+        return this.dataService.fetchBillTotal();
     };
-    RecordsPage.prototype.getPayTotal = function () {
-        return this.dataService.getPaystubTotal();
+    RecordsPage.prototype.fetchIncome = function () {
+        return this.dataService.fetchIncome();
     };
-    RecordsPage.prototype.getBillTotal = function () {
-        return this.dataService.getBillTotal();
+    RecordsPage.prototype.fetchIncomeTotal = function () {
+        return this.dataService.fetchIncomeTotal();
     };
-    RecordsPage.prototype.RecordSelected = function (item) {
-        var toast = this.toastCtrl.create({
-            message: item.name + " Selected",
-            duration: 2500,
-        });
-        toast.present();
+    /**
+     * send bill to record service modal
+     * @param item 'the item that user has selected to view'
+     */
+    RecordsPage.prototype.onItemClick = function (item) {
+        //this.recordService.presentRecordModal(item);
+        this.dialogService.featureNotAvaliableAlert();
     };
-    RecordsPage.prototype.viewRecord = function (item) {
-        this.recordService.presentRecordModal(item);
-    };
-    RecordsPage.prototype.create = function () {
-        this.dialogService.presentCreateSheet();
+    /**
+     * starts command for creation of new record item
+     */
+    RecordsPage.prototype.onCreateNew = function () {
+        //this.dialogService.presentCreateSheet()
+        this.dialogService.featureNotAvaliableAlert();
     };
     RecordsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-records',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Records\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <!--Tabs for each section of records-->\n    <ion-segment [(ngModel)]="records">\n      <ion-segment-button value="income">\n        Income\n      </ion-segment-button>\n      <ion-segment-button value="bills">\n        Bills\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n\n  <!--Tab data -->\n  <div [ngSwitch]="records">\n    <ion-list *ngSwitchCase="\'income\'">\n      <button ion-item *ngFor="let item of loadIncome()" (click)="viewRecord(item)" no-padding>\n        <ion-grid>\n          <ion-row>\n            <ion-col col-7 style="font-size: small;">\n              {{item.reference}}\n            </ion-col>\n            <ion-col col-5 text-right style="text-align: right;font-size: small;">\n              {{item.pay | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </button>\n      <ion-grid>\n        <ion-row>\n          <ion-col col-7>\n            Total\n          </ion-col>\n          <ion-col col-5 text-right style="text-align: right;font-size: small;">\n            {{getPayTotal() | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'bills\'">\n      <button ion-item *ngFor="let item of loadBills()" (click)="viewRecord(item)" no-padding style="font-size: small;">\n        <ion-grid>\n          <ion-row>\n            <ion-col col-7>\n              {{item.reference}}\n            </ion-col>\n            <ion-col col-5 text-right style="text-align: right;font-size: small;">\n              {{item.amount | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </button>\n      <ion-grid>\n        <ion-row>\n          <ion-col col-7>\n            Total\n          </ion-col>\n          <ion-col col-5 text-right>\n            {{getBillTotal() | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-list>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/
+            selector: 'page-records',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Records\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="onCreateNew()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <!--Tabs for each section of records-->\n    <ion-segment [(ngModel)]="records">\n      <ion-segment-button value="income">\n        Income\n      </ion-segment-button>\n      <ion-segment-button value="bills">\n        Bills\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n\n  <!--Tab data -->\n  <div [ngSwitch]="records">\n    <ion-list *ngSwitchCase="\'income\'">\n      <h6 class="no-item" *ngIf="fetchIncome().length === 0" padding-top>No Income added :(</h6>\n      <button ion-item *ngFor="let income of fetchIncome()" (click)="onItemClick(item)" class="item-layout">\n        <ion-grid>\n          <ion-row>\n            <ion-col col-8 class="item-title">\n              {{income.title}}<br>\n            </ion-col>\n            <ion-col col-4 class="right-align-small-text">\n              <h3 class="income-amount">{{income.amount | currency}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </button>\n      <ion-grid>\n        <ion-row>\n          <ion-col col-7>\n            Total\n          </ion-col>\n          <ion-col col-5 text-right>\n            {{fetchIncomeTotal() | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-list>\n    <!--Bill Section-->\n    <ion-list *ngSwitchCase="\'bills\'">\n      <h6 class="no-item" *ngIf="fetchBills().length === 0" padding-top>No Bills added :(</h6>\n      <button ion-item *ngFor="let bill of fetchBills()" (click)="onItemClick(item)" no-padding style="font-size: small;">\n        <ion-grid>\n          <ion-row>\n            <ion-col col-8 class="item-title">\n              {{bill.title}}<br>\n            </ion-col>\n            <ion-col col-4 class="right-align-small-text">\n              <h3 class="bill-amount">{{bill.amount | currency}}</h3>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </button>\n      <ion-grid>\n        <ion-row>\n          <ion-col col-7>\n            Total\n          </ion-col>\n          <ion-col col-5 text-right>\n            {{fetchBillTotal() | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-list>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/records/records.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__providers_record_service_record_service__["b" /* RecordServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__providers_record_service_record_service__["b" /* RecordServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_record_service_record_service__["b" /* RecordServiceProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _e || Object])
     ], RecordsPage);
     return RecordsPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=records.js.map
@@ -375,6 +432,7 @@ var RecordsPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_data_service_kompass_objects__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -388,47 +446,136 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var BudgetPage = /** @class */ (function () {
-    function BudgetPage(navCtrl, dataService, dialogService) {
+    function BudgetPage(actionCtrl, alertCtrl, navCtrl, dataService, dialogService) {
+        this.actionCtrl = actionCtrl;
+        this.alertCtrl = alertCtrl;
         this.navCtrl = navCtrl;
         this.dataService = dataService;
         this.dialogService = dialogService;
+        this.activeBudgetItems = [];
+        this.avaliableManualItems = [];
+        this.avaliableIncomeItems = [];
+        this.avaliableBillItems = [];
+        this.allocateItems(this.dataService.fetchBudgetItems(), this.dataService.fetchManualBudgetItems());
     }
-    BudgetPage.prototype.totalBudget = function () {
-        return this.dataService.getTotalBudget();
+    //NEW CONCEPT SECTION TO REPLACE ABOVE - DONE
+    BudgetPage.prototype.allocateItems = function (records, manuals) {
+        var _this = this;
+        records.forEach(function (item) {
+            if (item.inBudget) {
+                _this.activeBudgetItems.push(item);
+            }
+            else {
+                if (item.kind === 0) {
+                    _this.avaliableIncomeItems.push(item);
+                }
+                else {
+                    _this.avaliableBillItems.push(item);
+                }
+            }
+        });
+        manuals.forEach(function (item) {
+            if (item.inBudget) {
+                _this.activeBudgetItems.push(item);
+            }
+            else {
+                _this.avaliableManualItems.push(item);
+            }
+        });
     };
-    BudgetPage.prototype.getManualItems = function () {
-        return this.dataService.getManualItems();
+    BudgetPage.prototype.updateActiveBudgetTotal = function () {
+        var total = 0.00;
+        this.activeBudgetItems.forEach(function (item) {
+            if (item.kind === 0) {
+                total = total + item.amount;
+            }
+            else {
+                total = total - item.amount;
+            }
+        });
+        return total;
     };
-    BudgetPage.prototype.getBudgetItems = function () {
-        return this.dataService.getBudgetItems();
-    };
-    BudgetPage.prototype.getIncomeItems = function () {
-        return this.dataService.getIncome();
-    };
-    BudgetPage.prototype.getBillItems = function () {
-        return this.dataService.getBills();
-    };
-    BudgetPage.prototype.onNewManualItem = function () {
-        this.dialogService.presentManualTypeSheet();
-    };
-    BudgetPage.prototype.onManualItemClick = function (item) {
-        this.dataService.manualAddToBudget(item);
-    };
-    BudgetPage.prototype.onIncomeClick = function (item) {
-        this.dataService.incomeAddToBudget(item);
-    };
-    BudgetPage.prototype.onBillClick = function (item) {
-        this.dataService.billAddToBudget(item);
+    BudgetPage.prototype.onItemClick = function (item) {
+        this.dataService.SetItemInBudget(item);
     };
     BudgetPage.prototype.onBudgetItemClick = function (item) {
-        this.dataService.removeItemFromBudget(item);
+        this.dataService.setItemOutBudget(item);
+    };
+    //TODO: create manual item and add to database. 
+    BudgetPage.prototype.onNewManualItemClick = function () {
+        this.presentManualTypeSheet();
+    };
+    //BUDGET ITEM ALERTS
+    BudgetPage.prototype.presentBudgetManualAddPrompt = function (isExpense) {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: 'Add Manual Item',
+            message: "Enter Manual Item Details",
+            inputs: [
+                {
+                    name: 'title',
+                    placeholder: 'Name',
+                    type: 'text'
+                },
+                {
+                    name: 'amount',
+                    placeholder: 'Amount',
+                    type: 'number',
+                    min: 0,
+                    max: 999999
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: function (data) {
+                        //do nothing
+                    }
+                },
+                {
+                    text: 'Add',
+                    handler: function (data) {
+                        _this.dataService.pushNewManualBudgetItem(new __WEBPACK_IMPORTED_MODULE_4__providers_data_service_kompass_objects__["a" /* Kompass */].ManualBudgetItem(data.title, isExpense, data.amount));
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    BudgetPage.prototype.presentManualTypeSheet = function () {
+        var _this = this;
+        //return the type the manual item is
+        var actionsheet = this.actionCtrl.create({
+            title: "Manual Item Type",
+            buttons: [
+                {
+                    text: 'Income',
+                    handler: function () {
+                        _this.presentBudgetManualAddPrompt(0);
+                    }
+                }, {
+                    text: 'Expense',
+                    handler: function () {
+                        _this.presentBudgetManualAddPrompt(1);
+                    }
+                }, {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        //left blank on purpose
+                    }
+                }
+            ]
+        });
+        actionsheet.present();
     };
     BudgetPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-budget',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/budget/budget.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Budget\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <ion-card>\n    <!--Budget Section -->\n    <ion-item-group>\n      <h6 class="no-item" *ngIf="getBudgetItems().length === 0" padding-top>No Items in your budget :(</h6>\n      <ion-item *ngFor="let item of getBudgetItems()">\n        <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">\n          <ion-icon name="close" color="red"></ion-icon>\n        </button>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col col-9 style="font-size: small;">\n              {{item.reference}}\n            </ion-col>\n            <ion-col col-2 *ngIf="item.constructor.name === \'Paystub\'" style="font-size: small; text-align: right;">\n              {{item.pay | currency}}\n            </ion-col>\n            <ion-col col-2 *ngIf="item.constructor.name === \'Bill\' || item.constructor.name === \'ManualItem\'" style="font-size: small; text-align: right;">\n              {{item.amount | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <hr>\n      <ion-item>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col col-9 style="font-size: small;">\n              Total\n            </ion-col>\n            <ion-col col-3 style="font-size: small; text-align: right;">\n              {{totalBudget() | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n    </ion-item-group>\n  </ion-card>\n  <!--Manual Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Manual</ion-item-divider>\n    <ion-item *ngFor="let item of getManualItems()">\n      <button ion-button clear item-start icon-only (click)="onManualItemClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 style="font-size: small;">\n            {{item.reference}}\n          </ion-col>\n          <ion-col col-3 style="font-size: small; text-align: right;">\n            {{item.amount | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n    <button ion-button clear (click)="onNewManualItem()">\n      Add New Manual Item\n    </button>\n  </ion-item-group>\n  <!--Income Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Income</ion-item-divider>\n    <ion-item *ngFor="let item of getIncomeItems()">\n      <button ion-button clear item-start icon-only (click)="onIncomeClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 style="font-size: small;">\n            {{item.reference}}\n          </ion-col>\n          <ion-col col-3 style="font-size: small; text-align: right;">\n            {{item.pay | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n  </ion-item-group>\n  <!--Bill Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Bills</ion-item-divider>\n    <ion-item *ngFor="let item of getBillItems()">\n      <button ion-button clear item-start icon-only (click)="onBillClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 style="font-size: small;">\n            {{item.reference}}\n          </ion-col>\n          <ion-col col-3 style="font-size: small; text-align: right;">\n            {{item.amount | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n  </ion-item-group>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/budget/budget.html"*/
+            selector: 'page-budget',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/budget/budget.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Budget\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <ion-card>\n    <!--Budget Section -->\n    <ion-item-group>\n      <h6 class="no-item" *ngIf="activeBudgetItems.length === 0" padding-top>No Items in your budget :(</h6>\n      <ion-item *ngFor="let item of activeBudgetItems">\n        <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">\n          <ion-icon name="close" color="kred"></ion-icon>\n        </button>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col col-9 class="item-title">\n              {{item.title}}\n            </ion-col>\n            <ion-col col-2 class="right-align-small-text">\n              {{item.amount | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <hr>\n      <ion-item>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col col-9 class="item-title">\n              Total\n            </ion-col>\n            <ion-col col-3 class="right-align-small-text">\n              {{updateActiveBudgetTotal() | currency}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n    </ion-item-group>\n  </ion-card>\n  <!--Manual Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Manual</ion-item-divider>\n    <ion-item *ngFor="let item of avaliableManualItems">\n      <button ion-button clear item-start icon-only (click)="onItemClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 class="item-title">\n            {{item.title}}\n          </ion-col>\n          <ion-col col-3 class="right-align-small-text">\n            {{item.amount | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n    <button ion-button clear (click)="onNewManualItemClick()">\n      Add New Manual Item\n    </button>\n  </ion-item-group>\n  <!--Income Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Income</ion-item-divider>\n    <ion-item *ngFor="let item of avaliableIncomeItems">\n      <button ion-button clear item-start icon-only (click)="onItemClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 class="item-title">\n            {{item.title}}\n          </ion-col>\n          <ion-col col-3 class="right-align-small-text">\n            {{item.amount | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n  </ion-item-group>\n  <!--Bill Section-->\n  <ion-item-group>\n    <ion-item-divider color="light">Bills</ion-item-divider>\n    <ion-item *ngFor="let item of avaliableBillItems">\n      <button ion-button clear item-start icon-only (click)="onItemClick(item)">\n        <ion-icon name="add" color="green"></ion-icon>\n      </button>\n      <ion-grid no-padding>\n        <ion-row>\n          <ion-col col-9 class="item-title">\n            {{item.title}}\n          </ion-col>\n          <ion-col col-3 class="right-align-small-text">\n            {{item.amount | currency}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-item>\n  </ion-item-group>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/budget/budget.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_dialog_service_dialog_service__["a" /* DialogServiceProvider */]])
     ], BudgetPage);
     return BudgetPage;
 }());
@@ -457,19 +604,73 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProfilePage = /** @class */ (function () {
-    function ProfilePage(navCtrl, dataService) {
+    function ProfilePage(alertCtrl, navCtrl, dataService) {
+        this.alertCtrl = alertCtrl;
         this.navCtrl = navCtrl;
         this.dataService = dataService;
-        this.user = this.dataService.getUser();
+        this.inDarkMode = true;
+        this.themes = [
+            { title: "Theme 1", active: false },
+            { title: "Theme 2", active: false },
+            { title: "Theme 3", active: false },
+            { title: "Theme 4", active: false },
+            { title: "Theme 5", active: false },
+            { title: "Theme 6", active: false },
+            { title: "Theme 7", active: false },
+        ];
+        this.user = this.dataService.fetchProfile();
     }
+    ProfilePage.prototype.onEditProfileDetails = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: 'Edit Profile Details',
+            inputs: [{
+                    name: 'name',
+                    placeholder: 'Name',
+                    value: this.user.name
+                }, {
+                    name: 'nickname',
+                    placeholder: 'Nickname',
+                    value: this.user.nickname
+                }, {
+                    name: 'jobtitle',
+                    placeholder: 'Occupation',
+                    value: this.user.jobTitle
+                }, {
+                    name: 'email',
+                    placeholder: 'Email',
+                    value: this.user.email
+                }, {
+                    name: 'phone',
+                    placeholder: 'Phone',
+                    value: this.user.phone
+                }],
+            buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel'
+                }, {
+                    text: 'Update',
+                    handler: function (data) {
+                        _this.user.name = data.name;
+                        _this.user.nickname = data.nickname;
+                        _this.user.jobTitle = data.jobtitle;
+                        _this.user.email = data.email;
+                        _this.user.phone = data.phone;
+                    }
+                }]
+        });
+        prompt.present();
+    };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Profile\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <ion-list>\n    <ion-item>\n      <ion-input type="text" placeholder="Name" value="{{user.fullName}}"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-input type="text" placeholder="Occupation" value="{{user.occupation}}"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-input type="email" placeholder="Email" value="{{user.email}}"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-input type="tel" placeholder="Phone" value="{{user.phone}}"></ion-input>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/
+            selector: 'page-profile',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Account\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n    <ion-label class="user-name" text-center>{{user.name}}</ion-label>\n    <ion-label class="user-nickname" text-center>&nbsp;&nbsp;{{user.nickname}}</ion-label>\n    <ion-icon class="icon-user-detail" name="briefcase">&nbsp;&nbsp;{{user.jobTitle}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="mail">&nbsp;&nbsp;{{user.email}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="call">&nbsp;&nbsp;{{user.phone}}</ion-icon>\n    <button ion-button full clear (click)="onEditProfileDetails()">Edit Profile</button>\n  </ion-card>\n\n  <ion-item-group>\n    <ion-item-divider class="group-header">\n      <ion-label >Notifications</ion-label>\n    </ion-item-divider>\n    <ion-item>\n      <ion-label>Reminder</ion-label>\n      <ion-select placeholder="Select" [(ngModel)]="reminderTime">\n        <ion-option value="1">1 Day</ion-option>\n        <ion-option value="2">2 Days</ion-option>\n        <ion-option value="3">3 Days</ion-option>\n        <ion-option value="7">1 Week</ion-option>\n        <ion-option value="14">2 Weeks</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <ion-item-divider class="group-header">\n      <ion-label >Theme</ion-label>\n    </ion-item-divider>\n    <ion-item>\n      <ion-label>Dark Mode</ion-label>\n      <ion-toggle [(ngModel)]="inDarkMode" end></ion-toggle>\n    </ion-item>\n\n    <ion-list *ngIf="!inDarkMode">\n      <ion-item *ngFor="let theme of themes">\n        <ion-label>{{theme.title}}</ion-label>\n        <ion-checkbox slot="start" [(ngModel)]="theme.active"></ion-checkbox>\n      </ion-item>\n    </ion-list>\n  </ion-item-group>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _c || Object])
     ], ProfilePage);
     return ProfilePage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=profile.js.map
@@ -612,109 +813,140 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 */
 var DataServiceProvider = /** @class */ (function () {
     function DataServiceProvider() {
-        this.activeUser = new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ActiveUser("John Smith", "Web Designer", "jdesign@smithdesigns.com", 2317683325);
-        this.paystubs = [
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Paystub("Charter Tech Support", "2020-04-22", 2, true, 1632.85),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Paystub("Web Designer", "2020-04-29", 4, false, 2000.00)
+        //NEW CONCEPT TO REPLCE ABOVE - DONE
+        //Fake Database tables
+        this.profile = new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Profile("John Smith", "jsmith@me.com", 2314432456, "Jon Jon", "Tech Support");
+        this.Records = [
+            //Test Incomes
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Tech Support', 0, '04-18-2020', 3, true, 2318.54, 'Main Source of Income'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Web Designer', 0, '05-01-2020', 4, false, 943.22, 'Secondary Source of Income'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Freelance WebSite', 0, '05-22-2020', 0, false, 1032.43, 'Freelance Webpage for Company X'),
+            //test Bills from 
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Rent', 1, '04-01-2020', 4, false, 850.00, 'Apartment Complex X Owned by Company Y'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Electric', 1, '04-15-2020', 4, false, 82.43, 'Electric Copmany X'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Netflix', 1, '04-04-2020', 4, true, 7.99, 'Basic Plan: Standard Quality'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Hulu', 1, '04-04-2020', 4, true, 6.99, 'Basic Individual Plan: Standard Quality'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Apple Music', 1, '04-24-2020', 4, true, 4.99, 'Student Apple Music Plan'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Starz', 1, '04-14-2020', 4, true, 8.99, 'Individual Plan: Standard Quality'),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Record('Student Loans', 1, '04-28-2020', 4, true, 278.65, 'Sallie Mae Student Loan')
         ];
-        this.bills = [
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Netflix", "2020-03-28", 4, true, 15.99),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Hulu", "2020-03-28", 4, true, 7.99),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Electric", "2020-03-28", 4, false, 86.45),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Rent", "2020-03-28", 4, false, 1240.00),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Gas", "2020-03-28", 4, false, 23.65),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Water", "2020-03-28", 4, false, 30.00),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Sallie Mae (Student Loan)", "2020-03-28", 4, true, 259.98),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Sewer", "2020-03-28", 4, false, 42.00),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Internet", "2020-03-28", 4, true, 76.34),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Cell Phone", "2020-03-28", 4, true, 122.42),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].Bill("Cable", "2020-03-28", 4, true, 43.67)
+        this.ManualBudgetItems = [
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualBudgetItem('Groceries', 1, 200.00),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualBudgetItem('Fun', 1, 30.00),
+            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualBudgetItem('Add To Saving', 1, 50.00)
         ];
-        this.manualItems = [
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualItem("Income", false, 1234.56),
-            new __WEBPACK_IMPORTED_MODULE_1__kompass_objects__["a" /* Kompass */].ManualItem("Expense", true, 123.45)
-        ];
-        this.budgetItems = [];
     }
-    DataServiceProvider.prototype.getTotalBudget = function () {
-        var total = 0;
-        this.budgetItems.forEach(function (item) {
-            if (item.constructor.name == 'Paystub') {
-                total += item.pay;
-                console.log(typeof (item.pay));
-            }
-            else if (item.constructor.name == 'Bill') {
-                total -= item.amount;
-                console.log(typeof (item.amount));
-            }
-            else {
-                if (item.isExpense) {
-                    total -= item.amount;
-                    console.log(typeof (item.amount));
-                }
-                else {
-                    total += item.amount;
-                    console.log(typeof (item.amount));
-                }
-            }
+    /**
+     * Retrieve Profile of Logged in user
+     */
+    DataServiceProvider.prototype.fetchProfile = function () {
+        return this.profile;
+    };
+    /**
+     * Retrieve All Income for user
+     */
+    DataServiceProvider.prototype.fetchIncome = function () {
+        return this.FindRecordType(this.Records, 0);
+    };
+    DataServiceProvider.prototype.fetchIncomeTotal = function () {
+        var total = 0.00;
+        this.fetchIncome().forEach(function (income) {
+            total = total + income.amount;
         });
         return total;
     };
-    DataServiceProvider.prototype.manualAddToBudget = function (item) {
-        this.manualItems.splice(this.manualItems.indexOf(item), 1);
-        this.budgetItems.push(item);
+    /**
+     * Retrieve All Bills for user
+     */
+    DataServiceProvider.prototype.fetchBills = function () {
+        return this.FindRecordType(this.Records, 1);
     };
-    DataServiceProvider.prototype.manualAddNewItem = function (item) {
-        this.manualItems.push(item);
+    DataServiceProvider.prototype.fetchUpcomingBills = function () {
+        var upcomingBills = [];
+        var currentMonth = new Date().getMonth();
+        this.fetchBills().forEach(function (bill) {
+            var billDate = new Date(bill.nextOccurenceDate).getMonth();
+            if (billDate === currentMonth) {
+                upcomingBills.push(bill);
+            }
+        });
+        return upcomingBills;
     };
-    DataServiceProvider.prototype.incomeAddToBudget = function (item) {
-        this.paystubs.splice(this.paystubs.indexOf(item), 1);
-        this.budgetItems.push(item);
+    DataServiceProvider.prototype.fetchBillTotal = function () {
+        var total = 0.00;
+        this.fetchBills().forEach(function (bill) {
+            total = total + bill.amount;
+        });
+        return total;
     };
-    DataServiceProvider.prototype.billAddToBudget = function (item) {
-        this.bills.splice(this.bills.indexOf(item), 1);
-        this.budgetItems.push(item);
+    /**
+     * Retrieve all budget items for user
+     */
+    DataServiceProvider.prototype.fetchBudgetItems = function () {
+        return this.Records;
     };
-    DataServiceProvider.prototype.removeItemFromBudget = function (item) {
-        this.budgetItems.splice(this.budgetItems.indexOf(item), 1);
-        if (item.constructor.name == 'Paystub') {
-            this.paystubs.push(item);
-        }
-        else if (item.constructor.name == 'Bill') {
-            this.bills.push(item);
+    /**
+     * Retrieve All Manual Budget Items for user
+     */
+    DataServiceProvider.prototype.fetchManualBudgetItems = function () {
+        return this.ManualBudgetItems;
+    };
+    /**
+     * adds item to budget list
+     * @param item item to add to budget list
+     */
+    DataServiceProvider.prototype.SetItemInBudget = function (item) {
+        item.inBudget = true;
+        if (item.constructor.name === "Record") {
+            this.Records[this.Records.indexOf(item)] = item;
         }
         else {
-            this.manualItems.push(item);
+            this.ManualBudgetItems[this.ManualBudgetItems.indexOf(item)] = item;
         }
     };
-    DataServiceProvider.prototype.getUser = function () {
-        return this.activeUser;
+    /**
+     * removes item from budget list.
+     * @param item item to remove from budget
+     */
+    DataServiceProvider.prototype.setItemOutBudget = function (item) {
+        item.inBudget = false;
+        if (item.constructor.name === "Record") {
+            this.Records[this.Records.indexOf(item)] = item;
+        }
+        else {
+            this.ManualBudgetItems[this.ManualBudgetItems.indexOf(item)] = item;
+        }
     };
-    DataServiceProvider.prototype.getIncome = function () {
-        return this.paystubs;
+    DataServiceProvider.prototype.pushNewManualBudgetItem = function (item) {
+        this.ManualBudgetItems.push(item);
     };
-    DataServiceProvider.prototype.getBills = function () {
-        return this.bills;
+    /**
+     * updates record in database with new information
+     * @param record 'Record to be updated'
+     */
+    DataServiceProvider.prototype.updateRecord = function (record) {
+        this.Records[this.Records.indexOf(record)] = record;
     };
-    DataServiceProvider.prototype.getBudgetItems = function () {
-        return this.budgetItems;
+    /**updates maunal budget item in database
+     * @param item 'Manual Budget Item to Be updated in database
+     */
+    DataServiceProvider.prototype.updateManualBudgetItem = function (item) {
+        this.ManualBudgetItems[this.ManualBudgetItems.indexOf(item)] = item;
     };
-    DataServiceProvider.prototype.getManualItems = function () {
-        return this.manualItems;
-    };
-    DataServiceProvider.prototype.getPaystubTotal = function () {
-        var total = 0.00;
-        this.paystubs.forEach(function (stub) {
-            total += stub.pay;
+    //Filter Functions
+    /**
+     * Take a list of records and filters for a specific type
+     * @param recordList 'The list of records of various kinds'
+     * @param recordType 'The specific kind to find'
+     */
+    DataServiceProvider.prototype.FindRecordType = function (recordList, recordType) {
+        var filteredList = [];
+        recordList.forEach(function (record) {
+            if (record.kind === recordType) {
+                filteredList.push(record);
+            }
         });
-        return total;
-    };
-    DataServiceProvider.prototype.getBillTotal = function () {
-        var total = 0.00;
-        this.bills.forEach(function (bill) {
-            total += bill.amount;
-        });
-        return total;
+        return filteredList;
     };
     DataServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -850,7 +1082,7 @@ var RecordServiceProvider = /** @class */ (function () {
         //console.log('Hello RecordServiceProvider Provider');
     }
     RecordServiceProvider.prototype.presentRecordModal = function (item) {
-        var recordModal = this.modalCtrl.create(RecordModal, item);
+        var recordModal = this.modalCtrl.create(RecordModal, item ? item : null);
         recordModal.present();
     };
     RecordServiceProvider = __decorate([
@@ -867,7 +1099,6 @@ var RecordModal = /** @class */ (function () {
         this.viewCtrl = viewCtrl;
         this.loadingCtrl = loadingCtrl;
         this.item = params.data;
-        this.type = this.item.constructor.name;
     }
     //close payment modal
     RecordModal.prototype.close = function () {
@@ -878,7 +1109,7 @@ var RecordModal = /** @class */ (function () {
         this.close();
     };
     RecordModal = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        {{item.name}} \n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="close()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<!--Bill Records Update-->\n<ion-content *ngIf="type === \'Bill\'">\n    <ion-list>\n        <ion-item>\n            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list>\n        <ion-item>\n            <ion-label>Auto Pay</ion-label>\n            <ion-toggle [(ngModel)]="item.isAutopay"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date Due</ion-label>\n            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextDueDate"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.amount"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list><!--if record is a bill or credit card-->\n        <ion-list-header>\n            Past Payments\n        </ion-list-header>\n        <ion-item>Previous Payment 1</ion-item>\n        <ion-item>Previous Payment 2</ion-item>\n        <ion-item>Previous Payment 3</ion-item>\n        <ion-item>Previous Payment 4</ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord(item)">\n        Update Bill\n    </button>\n</ion-content>\n\n<!--Paystub Records Update-->\n<ion-content *ngIf="type === \'Paystub\'">\n    <ion-list>\n        <ion-item>\n            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list>\n        <ion-item>\n            <ion-label>Direct Deposit</ion-label>\n            <ion-toggle [(ngModel)]="item.isDirectDeposit"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-label>Next Pay Date</ion-label>\n            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextPayDate"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.pay"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list><!--if record is a bill or credit card-->\n        <ion-list-header>\n            Past Paystubs\n        </ion-list-header>\n        <ion-item>Previous Paystub 1</ion-item>\n        <ion-item>Previous Paystub 2</ion-item>\n        <ion-item>Previous Paystub 3</ion-item>\n        <ion-item>Previous Paystub 4</ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord(item)">\n        Update Paystub\n    </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        {{item.name}} \n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="close()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<!--Bill Records Update-->\n<ion-content *ngIf="item.constructor.name === \'Bill\'">\n    <ion-list>\n        <ion-item>\n            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list>\n        <ion-item>\n            <ion-label>Auto Pay</ion-label>\n            <ion-toggle [(ngModel)]="item.isAutopay"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date Due</ion-label>\n            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextDueDate"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.amount"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list><!--if record is a bill or credit card-->\n        <ion-list-header>\n            Past Payments\n        </ion-list-header>\n        <ion-item>Previous Payment 1</ion-item>\n        <ion-item>Previous Payment 2</ion-item>\n        <ion-item>Previous Payment 3</ion-item>\n        <ion-item>Previous Payment 4</ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord(item)">\n        Update Bill\n    </button>\n</ion-content>\n\n<!--Paystub Records Update-->\n<ion-content *ngIf="item.constructor.name === \'Paystub\'">\n    <ion-list>\n        <ion-item>\n            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list>\n        <ion-item>\n            <ion-label>Direct Deposit</ion-label>\n            <ion-toggle [(ngModel)]="item.isDirectDeposit"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-label>Next Pay Date</ion-label>\n            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextPayDate"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.pay"></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-list><!--if record is a bill or credit card-->\n        <ion-list-header>\n            Past Paystubs\n        </ion-list-header>\n        <ion-item>Previous Paystub 1</ion-item>\n        <ion-item>Previous Paystub 2</ion-item>\n        <ion-item>Previous Paystub 3</ion-item>\n        <ion-item>Previous Paystub 4</ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord(item)">\n        Update Paystub\n    </button>\n</ion-content>\n\n<!--NEW CONCEPT SECTION TO REPLACE ABOVE-->'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
     ], RecordModal);
@@ -898,7 +1129,6 @@ var RecordModal = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_service_data_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_service_kompass_objects__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -908,7 +1138,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -929,69 +1158,13 @@ var DialogServiceProvider = /** @class */ (function () {
         this.alertCtrl = alertCtrl;
         //console.log('Hello DialogServiceProvider Provider');
     }
-    DialogServiceProvider.prototype.presentBudgetManualAddPrompt = function (isExpense) {
-        var _this = this;
-        var prompt = this.alertCtrl.create({
-            title: 'Add Manual Item',
-            message: "Enter Manual Item Details",
-            inputs: [
-                {
-                    name: 'reference',
-                    placeholder: 'Name',
-                    type: 'text'
-                },
-                {
-                    name: 'amount',
-                    placeholder: 'Amount',
-                    type: 'number',
-                    min: 0,
-                    max: 999999
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    handler: function (data) {
-                        //do nothing
-                    }
-                },
-                {
-                    text: 'Add',
-                    handler: function (data) {
-                        var item = new __WEBPACK_IMPORTED_MODULE_4__data_service_kompass_objects__["a" /* Kompass */].ManualItem(data.reference, isExpense, data.amount);
-                        _this.dataService.manualAddNewItem(item);
-                    }
-                }
-            ]
+    DialogServiceProvider.prototype.featureNotAvaliableAlert = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Feature Unavailable',
+            message: 'Sorry, feature is not available!',
+            buttons: ['OK']
         });
-        prompt.present();
-    };
-    DialogServiceProvider.prototype.presentManualTypeSheet = function () {
-        var _this = this;
-        //return the type the manual item is
-        var actionsheet = this.actionCtrl.create({
-            title: "Manual Item Type",
-            buttons: [
-                {
-                    text: 'Income',
-                    handler: function () {
-                        _this.presentBudgetManualAddPrompt(false);
-                    }
-                }, {
-                    text: 'Expense',
-                    handler: function () {
-                        _this.presentBudgetManualAddPrompt(true);
-                    }
-                }, {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function () {
-                        //do nothing
-                    }
-                }
-            ]
-        });
-        actionsheet.present();
+        alert.present();
     };
     DialogServiceProvider.prototype.presentCreateSheet = function () {
         var _this = this;
@@ -1021,10 +1194,9 @@ var DialogServiceProvider = /** @class */ (function () {
     };
     DialogServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_2__record_service_record_service__["b" /* RecordServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
     ], DialogServiceProvider);
     return DialogServiceProvider;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=dialog-service.js.map

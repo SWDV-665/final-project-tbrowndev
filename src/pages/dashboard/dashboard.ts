@@ -5,6 +5,7 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service';
 import { PaymentServiceProvider } from '../../providers/payment-service/payment-service';
 import { RecordServiceProvider } from '../../providers/record-service/record-service';
+import { Kompass } from '../../providers/data-service/kompass-objects';
 
 @Component({
   selector: 'page-dashboard',
@@ -12,26 +13,43 @@ import { RecordServiceProvider } from '../../providers/record-service/record-ser
 })
 export class DashboardPage {
 
-  title = "Dashboard"
-  upcomingTitle = "Upcoming Bills Due";
-
   constructor(public paymentService: PaymentServiceProvider, public recordService: RecordServiceProvider, public navCtrl: NavController, public toastCtrl: ToastController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
   }
 
-  loadBills() {
-    return this.dataService.getBills();
+  //NEW CONCEPT SECTION TO REPLACE ABOVE - DONE
+
+  /**
+   * gathers all upcoming bills from data service
+   */
+  fetchUpcomingBills(){
+    return this.dataService.fetchUpcomingBills();
   }
 
-  markPaid(bill) {
-    this.paymentService.presentPaymentModal(bill);
+  /**
+   * send bill to payment service modal
+   * @param item 'the item that will be paid'
+   * 
+   */
+  onMarkPaid(item: Kompass.Record){
+    //this.paymentService.presentPaymentModal(item);
+    this.dialogService.featureNotAvaliableAlert();
   }
 
-  viewItem(item) {
-    this.recordService.presentRecordModal(item)
+  /**
+   * send bill to record service modal
+   * @param item 'the item that user has selected to view'
+   */
+  onItemClick(item: Kompass.Record){
+    //this.recordService.presentRecordModal(item);
+    this.dialogService.featureNotAvaliableAlert();
   }
 
-  create() {
-    this.dialogService.presentCreateSheet();
+  /**
+   * starts command for creation of new record item
+   */
+  onCreateNew(){
+    //this.dialogService.presentCreateSheet();
+    this.dialogService.featureNotAvaliableAlert();
   }
 
 }

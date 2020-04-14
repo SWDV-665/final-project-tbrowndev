@@ -1,3 +1,45 @@
 page-records {
+    .no-item {
+        color: map-get($colors,klightgray);
+        text-align: center;
+    }
 
+    .bill-amount{
+        color: map-get($colors,kred);
+        font-weight: normal;
+        font-style: oblique;
+        text-align: right;
+    }
+    .income-amount{
+        color: map-get($colors,kgreen);
+        font-weight: normal;
+        font-style: oblique;
+        text-align: right;
+    }
+
+    .right-align-small-text{
+        text-align: right;
+        font-size: smaller;
+    }
+
+    .item-note{
+        text-align: left;
+        font-size: 7pt;
+    }
+    
+    .item-title{
+        font-size: large;
+        font-style: oblique;
+    }
+
+    .item-layout{
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .no-spacing{
+        padding: 0;
+        margin: 0;
+    }
 }

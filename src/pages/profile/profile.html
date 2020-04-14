@@ -1,25 +1,51 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Profile
+      Account
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content no-padding>
-  <ion-list>
+<ion-content>
+
+  <ion-card>
+    <ion-label class="user-name" text-center>{{user.name}}</ion-label>
+    <ion-label class="user-nickname" text-center>&nbsp;&nbsp;{{user.nickname}}</ion-label>
+    <ion-icon class="icon-user-detail" name="briefcase">&nbsp;&nbsp;{{user.jobTitle}}</ion-icon>
+    <ion-icon class="icon-user-detail" name="mail">&nbsp;&nbsp;{{user.email}}</ion-icon>
+    <ion-icon class="icon-user-detail" name="call">&nbsp;&nbsp;{{user.phone}}</ion-icon>
+    <button ion-button full clear (click)="onEditProfileDetails()">Edit Profile</button>
+  </ion-card>
+
+  <ion-item-group>
+    <ion-item-divider class="group-header">
+      <ion-label >Notifications</ion-label>
+    </ion-item-divider>
     <ion-item>
-      <ion-input type="text" placeholder="Name" value="{{user.fullName}}"></ion-input>
+      <ion-label>Reminder</ion-label>
+      <ion-select placeholder="Select" [(ngModel)]="reminderTime">
+        <ion-option value="1">1 Day</ion-option>
+        <ion-option value="2">2 Days</ion-option>
+        <ion-option value="3">3 Days</ion-option>
+        <ion-option value="7">1 Week</ion-option>
+        <ion-option value="14">2 Weeks</ion-option>
+      </ion-select>
     </ion-item>
+
+    <ion-item-divider class="group-header">
+      <ion-label >Theme</ion-label>
+    </ion-item-divider>
     <ion-item>
-      <ion-input type="text" placeholder="Occupation" value="{{user.occupation}}"></ion-input>
+      <ion-label>Dark Mode</ion-label>
+      <ion-toggle [(ngModel)]="inDarkMode" end></ion-toggle>
     </ion-item>
-    <ion-item>
-      <ion-input type="email" placeholder="Email" value="{{user.email}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="tel" placeholder="Phone" value="{{user.phone}}"></ion-input>
-    </ion-item>
-  </ion-list>
+
+    <ion-list *ngIf="!inDarkMode">
+      <ion-item *ngFor="let theme of themes">
+        <ion-label>{{theme.title}}</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="theme.active"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </ion-item-group>
 
 </ion-content>

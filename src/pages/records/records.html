@@ -4,7 +4,7 @@
       Records
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="create()">
+      <button ion-button icon-only (click)="onCreateNew()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -27,38 +27,15 @@
   <!--Tab data -->
   <div [ngSwitch]="records">
     <ion-list *ngSwitchCase="'income'">
-      <button ion-item *ngFor="let item of loadIncome()" (click)="viewRecord(item)" no-padding>
+      <h6 class="no-item" *ngIf="fetchIncome().length === 0" padding-top>No Income added :(</h6>
+      <button ion-item *ngFor="let income of fetchIncome()" (click)="onItemClick(item)" class="item-layout">
         <ion-grid>
           <ion-row>
-            <ion-col col-7 style="font-size: small;">
-              {{item.reference}}
+            <ion-col col-8 class="item-title">
+              {{income.title}}<br>
             </ion-col>
-            <ion-col col-5 text-right style="text-align: right;font-size: small;">
-              {{item.pay | currency}}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </button>
-      <ion-grid>
-        <ion-row>
-          <ion-col col-7>
-            Total
-          </ion-col>
-          <ion-col col-5 text-right style="text-align: right;font-size: small;">
-            {{getPayTotal() | currency}}
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-list>
-    <ion-list *ngSwitchCase="'bills'">
-      <button ion-item *ngFor="let item of loadBills()" (click)="viewRecord(item)" no-padding style="font-size: small;">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-7>
-              {{item.reference}}
-            </ion-col>
-            <ion-col col-5 text-right style="text-align: right;font-size: small;">
-              {{item.amount | currency}}
+            <ion-col col-4 class="right-align-small-text">
+              <h3 class="income-amount">{{income.amount | currency}}</h3>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -69,7 +46,33 @@
             Total
           </ion-col>
           <ion-col col-5 text-right>
-            {{getBillTotal() | currency}}
+            {{fetchIncomeTotal() | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <!--Bill Section-->
+    <ion-list *ngSwitchCase="'bills'">
+      <h6 class="no-item" *ngIf="fetchBills().length === 0" padding-top>No Bills added :(</h6>
+      <button ion-item *ngFor="let bill of fetchBills()" (click)="onItemClick(item)" no-padding style="font-size: small;">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-8 class="item-title">
+              {{bill.title}}<br>
+            </ion-col>
+            <ion-col col-4 class="right-align-small-text">
+              <h3 class="bill-amount">{{bill.amount | currency}}</h3>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </button>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-7>
+            Total
+          </ion-col>
+          <ion-col col-5 text-right>
+            {{fetchBillTotal() | currency}}
           </ion-col>
         </ion-row>
       </ion-grid>

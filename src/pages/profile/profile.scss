@@ -1,3 +1,22 @@
 page-profile {
 
+    .user-nickname{
+        color: map-get($map: $colors, $key: klightgray);
+        font-size: large;
+    }
+
+    .user-name{
+        font-weight: bold;
+        font-size: x-large;
+    }
+
+    .icon-user-detail{
+        align-items: center;
+        margin-left: 10%;
+        margin-top: 5px;
+    }
+
+    .group-header{
+        background-color: transparent;
+    }
 }

@@ -12,7 +12,7 @@
 </ion-header>
 
 <!--Bill Records Update-->
-<ion-content *ngIf="type === 'Bill'">
+<ion-content *ngIf="item.constructor.name === 'Bill'">
     <ion-list>
         <ion-item>
             <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>
@@ -46,7 +46,7 @@
 </ion-content>
 
 <!--Paystub Records Update-->
-<ion-content *ngIf="type === 'Paystub'">
+<ion-content *ngIf="item.constructor.name === 'Paystub'">
     <ion-list>
         <ion-item>
             <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>
@@ -78,3 +78,5 @@
         Update Paystub
     </button>
 </ion-content>
+
+<!--NEW CONCEPT SECTION TO REPLACE ABOVE-->

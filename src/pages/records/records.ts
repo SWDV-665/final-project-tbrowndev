@@ -4,6 +4,7 @@ import { ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { RecordServiceProvider } from '../../providers/record-service/record-service';
 import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service';
+import { Kompass } from '../../providers/data-service/kompass-objects'
 
 @Component({
   selector: 'page-records',
@@ -18,36 +19,35 @@ export class RecordsPage {
 
   }
 
-  loadBills(){
-    return this.dataService.getBills();
+  //NEW CONCEPT TO REPLACE ABOVE - DONE
+  fetchBills(){
+    return this.dataService.fetchBills();
   }
-  loadIncome(){
-    return this.dataService.getIncome();
+  fetchBillTotal(){
+    return this.dataService.fetchBillTotal();
   }
-
-  getPayTotal(){
-    return this.dataService.getPaystubTotal();
+  fetchIncome(){
+    return this.dataService.fetchIncome();
   }
-
-  getBillTotal(){
-    return this.dataService.getBillTotal();
-  }
-
-  RecordSelected(item) {
-    const toast = this.toastCtrl.create({
-      message: item.name + " Selected",
-      duration: 2500,
-      //showCloseButton: true
-    });
-    toast.present();
+  fetchIncomeTotal(){
+    return this.dataService.fetchIncomeTotal();
   }
 
-  viewRecord(item){
-    this.recordService.presentRecordModal(item);
+  /**
+   * send bill to record service modal
+   * @param item 'the item that user has selected to view'
+   */
+  onItemClick(item: Kompass.Record){
+    //this.recordService.presentRecordModal(item);
+    this.dialogService.featureNotAvaliableAlert();
   }
 
-  create(){
-    this.dialogService.presentCreateSheet();
+  /**
+   * starts command for creation of new record item
+   */
+  onCreateNew(){
+    //this.dialogService.presentCreateSheet()
+    this.dialogService.featureNotAvaliableAlert();
   }
 
 }

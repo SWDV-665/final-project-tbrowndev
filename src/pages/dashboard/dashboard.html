@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>Dashboard</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="create()">
+      <button ion-button icon-only (click)="onCreateNew()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,33 +12,29 @@
 <ion-content>
 
   <h2 style="text-align: center;">
-    {{upcomingTitle}}
+    Remaining Bills Due this Month
   </h2>
   <hr>
   <ion-list>
     <!--Display a list of item objects-->
-    <h6 class="no-item" *ngIf="loadBills().length === 0">Whoo! No Upcoming Bills!</h6>
-    <ion-item-sliding *ngFor="let bill of loadBills()">
-      <ion-item (click)="viewItem(bill)">
-        <ion-grid no-padding>
-          <ion-row style="height: 30px;">
-            <ion-col col-1>
-              <ion-avatar>
-                <ion-icon name="cash"></ion-icon>
-              </ion-avatar>
+    <h6 class="no-item" *ngIf="fetchUpcomingBills().length === 0">Whoo! No Upcoming Bills!</h6>
+    <ion-item-sliding *ngFor="let bill of fetchUpcomingBills()">
+      <ion-item (click)="onItemClick(bill)" class="item-layout">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-8 class="item-title">
+              {{bill.title}}<br>
+              <p class="item-note">{{bill.description}}</p>
             </ion-col>
-            <ion-col col-7 style="font-size: medium;vertical-align: middle;">
-              {{bill.reference}}
-            </ion-col>
-            <ion-col col-4 style="text-align: right;font-size: small;">
-              {{bill.nextDueDate | date}}<br>
-              <h3 style="color: red; font-weight: bold;">{{bill.amount | currency}}</h3>
+            <ion-col col-4 class="right-align-small-text">
+              {{bill.nextOccurenceDate | date}}
+              <h3 class="bill-amount">{{bill.amount | currency}}</h3>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item-options side="left" (ionSwipe)="markPaid(bill)">
-        <button ion-button expandable (click)="markPaid(bill)">
+      <ion-item-options side="left" (ionSwipe)="onMarkPaid(bill)">
+        <button ion-button expandable (click)="onMarkPaid(bill)">
           <!--ion-icon name="checkmark"></ion-icon>-->
           Mark Paid
         </button>

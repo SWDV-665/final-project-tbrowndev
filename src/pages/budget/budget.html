@@ -10,20 +10,17 @@
   <ion-card>
     <!--Budget Section -->
     <ion-item-group>
-      <h6 class="no-item" *ngIf="getBudgetItems().length === 0" padding-top>No Items in your budget :(</h6>
-      <ion-item *ngFor="let item of getBudgetItems()">
+      <h6 class="no-item" *ngIf="activeBudgetItems.length === 0" padding-top>No Items in your budget :(</h6>
+      <ion-item *ngFor="let item of activeBudgetItems">
         <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">
-          <ion-icon name="close" color="red"></ion-icon>
+          <ion-icon name="close" color="kred"></ion-icon>
         </button>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col col-9 style="font-size: small;">
-              {{item.reference}}
+            <ion-col col-9 class="item-title">
+              {{item.title}}
             </ion-col>
-            <ion-col col-2 *ngIf="item.constructor.name === 'Paystub'" style="font-size: small; text-align: right;">
-              {{item.pay | currency}}
-            </ion-col>
-            <ion-col col-2 *ngIf="item.constructor.name === 'Bill' || item.constructor.name === 'ManualItem'" style="font-size: small; text-align: right;">
+            <ion-col col-2 class="right-align-small-text">
               {{item.amount | currency}}
             </ion-col>
           </ion-row>
@@ -33,11 +30,11 @@
       <ion-item>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col col-9 style="font-size: small;">
+            <ion-col col-9 class="item-title">
               Total
             </ion-col>
-            <ion-col col-3 style="font-size: small; text-align: right;">
-              {{totalBudget() | currency}}
+            <ion-col col-3 class="right-align-small-text">
+              {{updateActiveBudgetTotal() | currency}}
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -47,39 +44,39 @@
   <!--Manual Section-->
   <ion-item-group>
     <ion-item-divider color="light">Manual</ion-item-divider>
-    <ion-item *ngFor="let item of getManualItems()">
-      <button ion-button clear item-start icon-only (click)="onManualItemClick(item)">
+    <ion-item *ngFor="let item of avaliableManualItems">
+      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col col-9 style="font-size: small;">
-            {{item.reference}}
+          <ion-col col-9 class="item-title">
+            {{item.title}}
           </ion-col>
-          <ion-col col-3 style="font-size: small; text-align: right;">
+          <ion-col col-3 class="right-align-small-text">
             {{item.amount | currency}}
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
-    <button ion-button clear (click)="onNewManualItem()">
+    <button ion-button clear (click)="onNewManualItemClick()">
       Add New Manual Item
     </button>
   </ion-item-group>
   <!--Income Section-->
   <ion-item-group>
     <ion-item-divider color="light">Income</ion-item-divider>
-    <ion-item *ngFor="let item of getIncomeItems()">
-      <button ion-button clear item-start icon-only (click)="onIncomeClick(item)">
+    <ion-item *ngFor="let item of avaliableIncomeItems">
+      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col col-9 style="font-size: small;">
-            {{item.reference}}
+          <ion-col col-9 class="item-title">
+            {{item.title}}
           </ion-col>
-          <ion-col col-3 style="font-size: small; text-align: right;">
-            {{item.pay | currency}}
+          <ion-col col-3 class="right-align-small-text">
+            {{item.amount | currency}}
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -88,16 +85,16 @@
   <!--Bill Section-->
   <ion-item-group>
     <ion-item-divider color="light">Bills</ion-item-divider>
-    <ion-item *ngFor="let item of getBillItems()">
-      <button ion-button clear item-start icon-only (click)="onBillClick(item)">
+    <ion-item *ngFor="let item of avaliableBillItems">
+      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
       <ion-grid no-padding>
         <ion-row>
-          <ion-col col-9 style="font-size: small;">
-            {{item.reference}}
+          <ion-col col-9 class="item-title">
+            {{item.title}}
           </ion-col>
-          <ion-col col-3 style="font-size: small; text-align: right;">
+          <ion-col col-3 class="right-align-small-text">
             {{item.amount | currency}}
           </ion-col>
         </ion-row>

@@ -1,46 +1,40 @@
 page-dashboard {
     .no-item {
-        color: lightgray;
+        color: map-get($colors,klightgray);
         text-align: center;
     }
-    .card-title {
-        position: absolute;
-        top: 36%;
-        font-size: 1.4em;
-        width: 100%;
-        font-weight: bold;
-        color: rgb(0, 0, 0);
+
+    .bill-amount{
+        color: map-get($colors,kred);
+        font-weight: normal;
+        font-style: oblique;
+        text-align: right;
+    }
+
+    .right-align-small-text{
+        text-align: right;
+        font-size: smaller;
+    }
+
+    .item-note{
+        text-align: left;
+        font-size: 7pt;
     }
     
-    .card-subtitle {
-        font-size: .8em;
-        position: absolute;
-        top: 52%;
-        width: 100%;
-        color: rgb(0, 0, 0);
+    .item-title{
+        font-size: large;
+        font-style: oblique;
     }
-    
-    .header-group{
-        font-size: 2.0em;
-        font-weight: bold;
-        text-align: center;
-        height: 40px;
+
+    .item-layout{
+        margin: 5;
+        padding: 0;
+        height: 25px;
     }
-    
-    .scroll-zoom-wrapper {
-        white-space: nowrap;
-    }
-    
-    .ion-card-calendar {
-        height: auto;
-        width: auto !important;
-    }
-    
-    ion-scroll {
-        height: 180pt;
-        .scroll-content {
-            padding: 0px !important;
-        }
+
+    .no-spacing{
+        padding: 0;
+        margin: 0;
     }
        
 }
