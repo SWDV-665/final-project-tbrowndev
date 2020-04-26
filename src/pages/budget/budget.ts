@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service'
 import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service'
-import { Kompass } from '../../providers/data-service/kompass-objects';
 
 
 @Component({
@@ -12,73 +11,102 @@ import { Kompass } from '../../providers/data-service/kompass-objects';
 
 export class BudgetPage {
 
-  activeBudgetItems: (Kompass.Record|Kompass.ManualBudgetItem)[] = [];
-  avaliableManualItems: Kompass.ManualBudgetItem[] = [];
-  avaliableIncomeItems: Kompass.Record[] = [];
-  avaliableBillItems: Kompass.Record[] = [];
-  
+  income = [];
+  bills = [];
+  manuals = [];
+  budget = [];
+  errorMessage: any;
+
   constructor(public actionCtrl: ActionSheetController, public alertCtrl: AlertController, public navCtrl: NavController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
-    this.allocateItems(this.dataService.fetchBudgetItems(), this.dataService.fetchManualBudgetItems());
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadRecords();
+    });
   }
 
-  //NEW CONCEPT SECTION TO REPLACE ABOVE - DONE
-  allocateItems(records: Kompass.Record[], manuals:Kompass.ManualBudgetItem[]){
-    records.forEach( item => {
-      if(item.inBudget){
-        this.activeBudgetItems.push(item);
+  ionViewDidLoad() {
+    this.loadRecords();
+  }
+
+  //@ts-ignore
+  loadRecords() {
+    this.dataService.getRecords().subscribe(
+      items => this.manuals = items.filter(record => (record.kind === 2 || record.kind === 3) && record.inBudget === false),
+      error => this.errorMessage = <any>error
+    );
+    this.dataService.getRecords().subscribe(
+      items => this.income = items.filter(record => record.kind === 0 && record.inBudget === false),
+      error => this.errorMessage = <any>error
+    );
+    this.dataService.getRecords().subscribe(
+      items => this.bills = items.filter(record => record.kind === 1 && record.inBudget === false),
+      error => this.errorMessage = <any>error
+    );
+
+    this.dataService.getRecords().subscribe(
+      items => this.budget = items.filter(record => record.inBudget === true),
+      error => this.errorMessage = <any>error
+    );
+  }
+
+  calcBudgetExcess() {
+    var total = 0.00;
+    this.budget.forEach(record => {
+      if (record.kind === 0 || record.kind === 2) {
+        total = total + parseFloat(record.amount);
       }
-      else{
-        if (item.kind === 0){
-          this.avaliableIncomeItems.push(item);
-        }
-        else{
-          this.avaliableBillItems.push(item);
-        }
+      else {
+        total = total - parseFloat(record.amount);
       }
     })
-    manuals.forEach( item => {
-      if(item.inBudget){
-        this.activeBudgetItems.push(item);
-      }
-      else{
-        this.avaliableManualItems.push(item);
-      }
-    });
-  }
-
-  updateActiveBudgetTotal(){
-    var total: number = 0.00;
-    this.activeBudgetItems.forEach(item =>{
-      if(item.kind === 0){
-        total = total + item.amount;
-      }
-      else{
-        total = total -item.amount;
-      }
-    });
     return total;
   }
 
-  onItemClick(item){
-    this.dataService.SetItemInBudget(item);
-  }
-  onBudgetItemClick(item){
-    this.dataService.setItemOutBudget(item);
+  addToBudget(record) {
+    record.inBudget = true;
+    this.dataService.updateRecord(record);
   }
 
-  //TODO: create manual item and add to database. 
-  onNewManualItemClick(){
-    this.presentManualTypeSheet();
+  removeFromBudget(record) {
+    record.inBudget = false;
+    this.dataService.updateRecord(record);
   }
 
-  //BUDGET ITEM ALERTS
+  onEditManualItem(record){
+    const prompt = this.alertCtrl.create({
+      title: 'Edit Manual Record',
+      inputs:[{
+        name:'name',
+        placeholder: 'Name',
+        value: record.name
+      },{
+        name: 'amount',
+        placeholder:'Amount',
+        type: "Number",
+        value: record.amount
+      }],
+      buttons:[{
+        text: 'Cancel',
+        role: 'cancel'
+      },{
+        text: 'Update',
+        handler: data =>{
+          record.name = data.name;
+          record.amount = data.amount;
+          this.dataService.updateRecord(record);
+        }
+      }]
+    })
+    prompt.present();
+  }
+
+
   presentBudgetManualAddPrompt(isExpense) {
     const prompt = this.alertCtrl.create({
       title: 'Add Manual Item',
       message: "Enter Manual Item Details",
       inputs: [
         {
-          name: 'title',
+          name: 'name',
           placeholder: 'Name',
           type: 'text'
         },
@@ -100,7 +128,12 @@ export class BudgetPage {
         {
           text: 'Add',
           handler: data => {
-            this.dataService.pushNewManualBudgetItem(new Kompass.ManualBudgetItem(data.title, isExpense, data.amount));
+            this.dataService.createRecord({
+              name: data.name,
+              kind: isExpense,
+              amount: data.amount,
+              inBudget: false
+            });
           }
         }
       ]
@@ -116,12 +149,12 @@ export class BudgetPage {
         {
           text: 'Income',
           handler: () => {
-            this.presentBudgetManualAddPrompt(0);
+            this.presentBudgetManualAddPrompt(2);
           }
         }, {
           text: 'Expense',
           handler: () => {
-            this.presentBudgetManualAddPrompt(1);
+            this.presentBudgetManualAddPrompt(3);
           }
         }, {
           text: 'Cancel',

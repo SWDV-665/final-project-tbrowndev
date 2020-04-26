@@ -5,7 +5,6 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { DialogServiceProvider } from '../../providers/dialog-service/dialog-service';
 import { PaymentServiceProvider } from '../../providers/payment-service/payment-service';
 import { RecordServiceProvider } from '../../providers/record-service/record-service';
-import { Kompass } from '../../providers/data-service/kompass-objects';
 
 @Component({
   selector: 'page-dashboard',
@@ -13,43 +12,56 @@ import { Kompass } from '../../providers/data-service/kompass-objects';
 })
 export class DashboardPage {
 
+  billDueTitle = "Unpaid Bills This Month"
+
+  billsDue = [];
+  errorMessage: string;
+
   constructor(public paymentService: PaymentServiceProvider, public recordService: RecordServiceProvider, public navCtrl: NavController, public toastCtrl: ToastController, public dataService: DataServiceProvider, public dialogService: DialogServiceProvider) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadBills();
+    });
   }
 
-  //NEW CONCEPT SECTION TO REPLACE ABOVE - DONE
+  ionViewDidLoad() {
+    this.loadBills();
+  }
 
-  /**
-   * gathers all upcoming bills from data service
-   */
-  fetchUpcomingBills(){
-    return this.dataService.fetchUpcomingBills();
+  loadBills() {
+    this.dataService.getRecords().subscribe(
+      allRecords => this.billsDue = allRecords.filter(
+        //@ts-ignore
+        record => record.kind === 1  //filters data for only bills 
+          //@ts-ignore
+          && new Date(record.nextOccurenceDate).getUTCMonth() === new Date().getUTCMonth()
+          //@ts-ignore
+          && record.occurenceLevel != 0 //filters for bills due in the current month
+          //@ts-ignore
+          || (record.kind === 1 && new Date(record.nextOccurenceDate).getUTCMonth() === new Date().getUTCMonth() && record.occurenceLevel === 0 && record.payments.length === 0)
+      ),
+      error => this.errorMessage = <any>error
+    );
+  }
+
+  onRecordClick(record) {
+    this.recordService.presentRecordModal(record);
   }
 
   /**
    * send bill to payment service modal
-   * @param item 'the item that will be paid'
+   * @param record 'the item that will be paid'
    * 
    */
-  onMarkPaid(item: Kompass.Record){
-    //this.paymentService.presentPaymentModal(item);
-    this.dialogService.featureNotAvaliableAlert();
+  onMarkRecordPaid(record) {
+    this.paymentService.presentPaymentModal(record);
   }
 
   /**
-   * send bill to record service modal
-   * @param item 'the item that user has selected to view'
+   * starts command for creation of new record
    */
-  onItemClick(item: Kompass.Record){
-    //this.recordService.presentRecordModal(item);
-    this.dialogService.featureNotAvaliableAlert();
-  }
-
-  /**
-   * starts command for creation of new record item
-   */
-  onCreateNew(){
+  onCreateNew() {
     //this.dialogService.presentCreateSheet();
-    this.dialogService.featureNotAvaliableAlert();
+    this.dialogService.presentCreateSheet();
   }
 
 }

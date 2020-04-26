@@ -27,15 +27,15 @@
   <!--Tab data -->
   <div [ngSwitch]="records">
     <ion-list *ngSwitchCase="'income'">
-      <h6 class="no-item" *ngIf="fetchIncome().length === 0" padding-top>No Income added :(</h6>
-      <button ion-item *ngFor="let income of fetchIncome()" (click)="onItemClick(item)" class="item-layout">
+      <h6 class="no-item" *ngIf="income.length === 0" padding-top>No Income added :(</h6>
+      <button ion-item *ngFor="let record of income" (click)="onItemClick(record)" class="item-layout">
         <ion-grid>
           <ion-row>
             <ion-col col-8 class="item-title">
-              {{income.title}}<br>
+              {{record.name}}<br>
             </ion-col>
             <ion-col col-4 class="right-align-small-text">
-              <h3 class="income-amount">{{income.amount | currency}}</h3>
+              <h3 class="income-amount">{{record.amount | currency}}</h3>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -46,22 +46,22 @@
             Total
           </ion-col>
           <ion-col col-5 text-right>
-            {{fetchIncomeTotal() | currency}}
+            {{calcIncomeTotal() | currency}}
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-list>
     <!--Bill Section-->
     <ion-list *ngSwitchCase="'bills'">
-      <h6 class="no-item" *ngIf="fetchBills().length === 0" padding-top>No Bills added :(</h6>
-      <button ion-item *ngFor="let bill of fetchBills()" (click)="onItemClick(item)" no-padding style="font-size: small;">
+      <h6 class="no-item" *ngIf="bills.length === 0" padding-top>No Bills added :(</h6>
+      <button ion-item *ngFor="let record of bills" (click)="onItemClick(record)" no-padding style="font-size: small;">
         <ion-grid>
           <ion-row>
             <ion-col col-8 class="item-title">
-              {{bill.title}}<br>
+              {{record.name}}<br>
             </ion-col>
             <ion-col col-4 class="right-align-small-text">
-              <h3 class="bill-amount">{{bill.amount | currency}}</h3>
+              <h3 class="bill-amount">{{record.amount | currency}}</h3>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -72,7 +72,7 @@
             Total
           </ion-col>
           <ion-col col-5 text-right>
-            {{fetchBillTotal() | currency}}
+            {{calcBillTotal() | currency}}
           </ion-col>
         </ion-row>
       </ion-grid>

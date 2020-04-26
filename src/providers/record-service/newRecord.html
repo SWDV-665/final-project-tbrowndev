@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+        {{name}} 
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="close()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-input [(ngModel)]="name" type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Next Occurence Date</ion-label>
+            <ion-datetime [(ngModel)]="nextOccurenceDate" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Occurence Level</ion-label>
+            <ion-select [(ngModel)]="occurenceLevel" placeholder="Select">
+                <ion-option value="0">One Time</ion-option>
+                <ion-option value="1">Daily</ion-option>
+                <ion-option value="2">Weekly</ion-option>
+                <ion-option value="3">Bi-Weekly</ion-option>
+                <ion-option value="4">Monthly</ion-option>
+                <ion-option value="5">Yearly</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label *ngIf="kind == 0">Direct Deposit</ion-label>
+            <ion-label *ngIf="kind == 1">Auto Pay</ion-label>
+            <ion-toggle [(ngModel)]="isAuto"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-input type="number" [(ngModel)]="amount" placeholder="Amount (Optional)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-textarea [(ngModel)]="description" placeholder="Enter more information here..."></ion-textarea>
+        </ion-item>
+    </ion-list>
+    <button ion-button block large (click)="createRecord()">
+        Create Record
+    </button>
+</ion-content>
+

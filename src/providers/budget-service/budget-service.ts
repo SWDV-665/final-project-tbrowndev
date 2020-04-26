@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
 export class BudgetServiceProvider {
 
   constructor(public http: HttpClient) {
-    console.log('Hello BudgetServiceProvider Provider');
+    //console.log('Hello BudgetServiceProvider Provider');
   }
 
 }

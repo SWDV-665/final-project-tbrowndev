@@ -15,17 +15,19 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { PaymentModal } from '../providers/payment-service/payment-service';
 import { RecordModal } from '../providers/record-service/record-service';
+import { NewRecordModal } from '../providers/record-service/record-service';
 import { PaymentServiceProvider } from '../providers/payment-service/payment-service';
 import { RecordServiceProvider } from '../providers/record-service/record-service';
 import { BudgetServiceProvider } from '../providers/budget-service/budget-service';
 import { DialogServiceProvider } from '../providers/dialog-service/dialog-service';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     MyApp,
     RecordsPage,
     RecordModal,
+    NewRecordModal,
     ProfilePage,
     BudgetPage,
     DashboardPage,
@@ -34,6 +36,7 @@ import { DialogServiceProvider } from '../providers/dialog-service/dialog-servic
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -41,6 +44,7 @@ import { DialogServiceProvider } from '../providers/dialog-service/dialog-servic
     MyApp,
     RecordsPage,
     RecordModal,
+    NewRecordModal,
     ProfilePage,
     BudgetPage,
     DashboardPage,

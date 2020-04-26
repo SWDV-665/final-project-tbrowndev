@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Button } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AlertController } from 'ionic-angular';
 
@@ -9,46 +9,52 @@ import { AlertController } from 'ionic-angular';
 })
 export class ProfilePage {
 
-  user;
+  profile = [];
+
   inDarkMode: boolean = true;
 
+  errorMessage:string;
+
   constructor(public alertCtrl: AlertController,public navCtrl: NavController, public dataService: DataServiceProvider) {
-    this.user = this.dataService.fetchProfile();
+    dataService.dataChanged$.subscribe((dataChanged:boolean) => {
+      this.loadProfile();
+    })
   }
 
-  public themes = [
-    {title: "Theme 1", active: false},
-    {title: "Theme 2", active: false},
-    {title: "Theme 3", active: false},
-    {title: "Theme 4", active: false},
-    {title: "Theme 5", active: false},
-    {title: "Theme 6", active: false},
-    {title: "Theme 7", active: false},
-  ]
+  ionViewDidLoad(){
+    this.loadProfile();
+  }
 
-  onEditProfileDetails(){
+  loadProfile(){
+    this.dataService.getProfile().subscribe(
+      profile => this.profile = profile,
+      error => this.errorMessage = <any>error
+    );
+  }
+
+  onEditProfileDetails(profileData){
     const prompt = this.alertCtrl.create({
       title: 'Edit Profile Details',
       inputs:[{
         name:'name',
         placeholder: 'Name',
-        value: this.user.name
+        value: profileData.name
       },{
         name: 'nickname',
         placeholder:'Nickname',
-        value: this.user.nickname
+        value: profileData.nickname
       }, {
         name: 'jobtitle',
         placeholder: 'Occupation',
-        value: this.user.jobTitle
+        value: profileData.jobtitle
       }, {
         name:'email',
         placeholder: 'Email',
-        value: this.user.email
+        value: profileData.email
       },{
         name:'phone',
         placeholder: 'Phone',
-        value: this.user.phone
+        value: profileData.phone
       }],
       buttons:[{
         text: 'Cancel',
@@ -56,11 +62,7 @@ export class ProfilePage {
       },{
         text: 'Update',
         handler: data =>{
-          this.user.name = data.name;
-          this.user.nickname = data.nickname;
-          this.user.jobTitle = data.jobtitle;
-          this.user.email = data.email;
-          this.user.phone = data.phone;
+          this.dataService.updateProfile(profileData._id, data);
         }
       }]
     })

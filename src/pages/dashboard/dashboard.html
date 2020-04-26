@@ -12,18 +12,18 @@
 <ion-content>
 
   <h2 style="text-align: center;">
-    Remaining Bills Due this Month
+    {{billDueTitle}}
   </h2>
   <hr>
   <ion-list>
     <!--Display a list of item objects-->
-    <h6 class="no-item" *ngIf="fetchUpcomingBills().length === 0">Whoo! No Upcoming Bills!</h6>
-    <ion-item-sliding *ngFor="let bill of fetchUpcomingBills()">
-      <ion-item (click)="onItemClick(bill)" class="item-layout">
+    <h6 class="no-item" *ngIf="billsDue.length === 0">Whoo! No Unpaid Bills!</h6>
+    <ion-item-sliding *ngFor="let bill of billsDue">
+      <ion-item (click)="onRecordClick(bill)" class="item-layout">
         <ion-grid>
           <ion-row>
             <ion-col col-8 class="item-title">
-              {{bill.title}}<br>
+              {{bill.name}}<br>
               <p class="item-note">{{bill.description}}</p>
             </ion-col>
             <ion-col col-4 class="right-align-small-text">
@@ -33,8 +33,8 @@
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item-options side="left" (ionSwipe)="onMarkPaid(bill)">
-        <button ion-button expandable (click)="onMarkPaid(bill)">
+      <ion-item-options side="left" (ionSwipe)="onMarkRecordPaid(bill)">
+        <button ion-button expandable (click)="onMarkRecordPaid(bill)">
           <!--ion-icon name="checkmark"></ion-icon>-->
           Mark Paid
         </button>

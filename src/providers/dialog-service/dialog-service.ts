@@ -33,12 +33,12 @@ export class DialogServiceProvider {
         {
           text: 'Income',
           handler: () => {
-            this.recordService.presentRecordModal();
+            this.recordService.presentNewRecordModal(0);
           }
         }, {
           text: 'Bill',
           handler: () => {
-            this.recordService.presentRecordModal();
+            this.recordService.presentNewRecordModal(1);
           }
         }, {
           text: 'Cancel',

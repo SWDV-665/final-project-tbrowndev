@@ -51443,6 +51443,8 @@ ion-navbar.toolbar {
 page-budget .no-item {
   color: lightgray;
   text-align: center;
+  margin-top: 0;
+  padding: 0;
 }
 
 page-budget .right-align-small-text {

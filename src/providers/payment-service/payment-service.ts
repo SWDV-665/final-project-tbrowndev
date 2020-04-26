@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Component } from '@angular/core';
-import { ModalController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
+import { ModalController, NavParams, ViewController, ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
@@ -30,12 +30,14 @@ export class PaymentServiceProvider {
 })
 export class PaymentModal {
   currentDate: string = new Date().toISOString();
-  item;
+  record;
   partialPayment: boolean = false;
-  paymentDetails = {payAmount:0, payDate: this.currentDate, conNum:""};
+  payDate: String; 
+  payAmount: Number;
+  confnum: String;
 
-  constructor(params: NavParams, public dataService: DataServiceProvider, public toastCtrl:ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
-    this.item = params.data;
+  constructor(params: NavParams, public dataService: DataServiceProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
+    this.record = params.data;
   }
 
   paymentChange() {
@@ -56,18 +58,24 @@ export class PaymentModal {
     this.viewCtrl.dismiss();
   }
 
-  markPaid(item, payDetails) {
+  markRecordPaid() {
     const loader = this.loadingCtrl.create({
       content: "Marking Payment...",
     });
     loader.present();
-    //this.dataService.payBill(item);
+    this.dataService.createPayment(this.record, {
+      occurenceDate: this.record.nextOccurenceDate,
+      amount: this.record.amount,
+      payDate: this.payDate,
+      payAmount: this.partialPayment ? this.payAmount : this.record.amount,
+      confnum: this.confnum
+    });
     loader.dismiss();
 
     this.viewCtrl.dismiss();
 
     const toast = this.toastCtrl.create({
-      message: item.name + " Marked as Paid",
+      message: this.record.name + " Marked as Paid",
       duration: 5000,
       showCloseButton: true
     });

@@ -10,15 +10,15 @@
   <ion-card>
     <!--Budget Section -->
     <ion-item-group>
-      <h6 class="no-item" *ngIf="activeBudgetItems.length === 0" padding-top>No Items in your budget :(</h6>
-      <ion-item *ngFor="let item of activeBudgetItems">
-        <button ion-button clear item-start icon-only (click)="onBudgetItemClick(item)">
+      <h6 class="no-item" *ngIf="budget.length === 0" padding-top>No Items in your budget :(</h6>
+      <ion-item *ngFor="let item of budget.sort()">
+        <button ion-button clear item-start icon-only (click)="removeFromBudget(item)">
           <ion-icon name="close" color="kred"></ion-icon>
         </button>
         <ion-grid no-padding>
           <ion-row>
             <ion-col col-9 class="item-title">
-              {{item.title}}
+              {{item.name}}
             </ion-col>
             <ion-col col-2 class="right-align-small-text">
               {{item.amount | currency}}
@@ -34,7 +34,7 @@
               Total
             </ion-col>
             <ion-col col-3 class="right-align-small-text">
-              {{updateActiveBudgetTotal() | currency}}
+              {{calcBudgetExcess() | currency}}
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -44,14 +44,15 @@
   <!--Manual Section-->
   <ion-item-group>
     <ion-item-divider color="light">Manual</ion-item-divider>
-    <ion-item *ngFor="let item of avaliableManualItems">
-      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
+    <h6 class="no-item" *ngIf="manuals.length === 0" padding-top>No Items Avaliable</h6>
+    <ion-item *ngFor="let item of manuals">
+      <button ion-button clear item-start icon-only (click)="addToBudget(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
-      <ion-grid no-padding>
+      <ion-grid no-padding (click)="onEditManualItem(item)">
         <ion-row>
           <ion-col col-9 class="item-title">
-            {{item.title}}
+            {{item.name}}
           </ion-col>
           <ion-col col-3 class="right-align-small-text">
             {{item.amount | currency}}
@@ -59,21 +60,22 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <button ion-button clear (click)="onNewManualItemClick()">
+    <button ion-button clear (click)="presentManualTypeSheet()">
       Add New Manual Item
     </button>
   </ion-item-group>
   <!--Income Section-->
   <ion-item-group>
     <ion-item-divider color="light">Income</ion-item-divider>
-    <ion-item *ngFor="let item of avaliableIncomeItems">
-      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
+    <h6 class="no-item" *ngIf="income.length === 0" padding-top>No Items Avaliable</h6>
+    <ion-item *ngFor="let item of income">
+      <button ion-button clear item-start icon-only (click)="addToBudget(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
       <ion-grid no-padding>
         <ion-row>
           <ion-col col-9 class="item-title">
-            {{item.title}}
+            {{item.name}} ({{item.nextOccurenceDate | date:'shortDate'}})
           </ion-col>
           <ion-col col-3 class="right-align-small-text">
             {{item.amount | currency}}
@@ -85,14 +87,15 @@
   <!--Bill Section-->
   <ion-item-group>
     <ion-item-divider color="light">Bills</ion-item-divider>
-    <ion-item *ngFor="let item of avaliableBillItems">
-      <button ion-button clear item-start icon-only (click)="onItemClick(item)">
+    <h6 class="no-item" *ngIf="bills.length === 0" padding-top>No Items Avaliable</h6>
+    <ion-item *ngFor="let item of bills">
+      <button ion-button clear item-start icon-only (click)="addToBudget(item)">
         <ion-icon name="add" color="green"></ion-icon>
       </button>
       <ion-grid no-padding>
         <ion-row>
           <ion-col col-9 class="item-title">
-            {{item.title}}
+            {{item.name}} ({{item.nextOccurenceDate | date:'shortDate'}})
           </ion-col>
           <ion-col col-3 class="right-align-small-text">
             {{item.amount | currency}}

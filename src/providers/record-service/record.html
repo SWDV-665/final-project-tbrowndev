@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-        {{item.name}} 
+        {{record.name}} 
         </ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="close()">
@@ -11,72 +11,60 @@
     </ion-toolbar>
 </ion-header>
 
-<!--Bill Records Update-->
-<ion-content *ngIf="item.constructor.name === 'Bill'">
+<ion-content>
     <ion-list>
         <ion-item>
-            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item>
-            <ion-label>Auto Pay</ion-label>
-            <ion-toggle [(ngModel)]="item.isAutopay"></ion-toggle>
+            <ion-input [(ngModel)]="record.name" type="text" placeholder="Name"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Date Due</ion-label>
-            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextDueDate"></ion-datetime>
+            <ion-label>Next Occurence Date</ion-label>
+            <ion-datetime [(ngModel)]="record.nextOccurenceDate" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>
         </ion-item>
         <ion-item>
-            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.amount"></ion-input>
+            <ion-label>Occurence Level</ion-label>
+            <ion-select [(ngModel)]="record.occurenceLevel" placeholder="Select">
+                <ion-option value="0">One Time</ion-option>
+                <ion-option value="1">Daily</ion-option>
+                <ion-option value="2">Weekly</ion-option>
+                <ion-option value="3">Bi-Weekly</ion-option>
+                <ion-option value="4">Monthly</ion-option>
+                <ion-option value="5">Yearly</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label *ngIf="record.kind == 0">Direct Deposit</ion-label>
+            <ion-label *ngIf="record.kind == 1">Auto Pay</ion-label>
+            <ion-toggle [(ngModel)]="record.isAuto"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-input type="number" [(ngModel)]="record.amount" placeholder="Amount (Optional)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-textarea [(ngModel)]="record.description" placeholder="Enter more information here..."></ion-textarea>
         </ion-item>
     </ion-list>
-    <ion-list><!--if record is a bill or credit card-->
-        <ion-list-header>
-            Past Payments
-        </ion-list-header>
-        <ion-item>Previous Payment 1</ion-item>
-        <ion-item>Previous Payment 2</ion-item>
-        <ion-item>Previous Payment 3</ion-item>
-        <ion-item>Previous Payment 4</ion-item>
+    <ion-list *ngIf="record.kind == 1">
+        <ion-list-header>Past Payments</ion-list-header>
+        <p *ngIf="payments.length === 0" text-center color="klightgray">No Past Payments :(</p>
+        <ion-item *ngFor="let payment of payments" style="height: 30px;">
+            <ion-grid>
+                <ion-row>
+                  <ion-col col-8>
+                    Payment<br>
+                    <p>{{payment.confnum}}</p>
+                  </ion-col>
+                  <ion-col col-4 text-right>
+                    {{payment.payDate | date}}
+                    <h3>{{payment.payAmount | currency}}</h3>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+        </ion-item>
     </ion-list>
-    <button ion-button block large (click)="updateRecord(item)">
-        Update Bill
+    <button ion-button block large (click)="updateRecord()">
+        Update
+    </button>
+    <button ion-button color="kred" block large (click)="presentDeletePrompt()">
+        Delete Record
     </button>
 </ion-content>
-
-<!--Paystub Records Update-->
-<ion-content *ngIf="item.constructor.name === 'Paystub'">
-    <ion-list>
-        <ion-item>
-            <ion-input type="text" placeholder="Name" [(ngModel)]="item.reference"></ion-input>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item>
-            <ion-label>Direct Deposit</ion-label>
-            <ion-toggle [(ngModel)]="item.isDirectDeposit"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>Next Pay Date</ion-label>
-            <ion-datetime pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date" [(ngModel)]="item.nextPayDate"></ion-datetime>
-        </ion-item>
-        <ion-item>
-            <ion-input type="number" placeholder="Amount (Optional)" [(ngModel)]="item.pay"></ion-input>
-        </ion-item>
-    </ion-list>
-    <ion-list><!--if record is a bill or credit card-->
-        <ion-list-header>
-            Past Paystubs
-        </ion-list-header>
-        <ion-item>Previous Paystub 1</ion-item>
-        <ion-item>Previous Paystub 2</ion-item>
-        <ion-item>Previous Paystub 3</ion-item>
-        <ion-item>Previous Paystub 4</ion-item>
-    </ion-list>
-    <button ion-button block large (click)="updateRecord(item)">
-        Update Paystub
-    </button>
-</ion-content>
-
-<!--NEW CONCEPT SECTION TO REPLACE ABOVE-->
