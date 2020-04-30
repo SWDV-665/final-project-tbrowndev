@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject';
+import { Calendar } from '@ionic-native/calendar'
 
 /*
   Generated class for the DataServiceProvider provider.
@@ -27,10 +28,23 @@ export class DataServiceProvider {
 
   private dataChangeSubject: Subject<boolean>;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public cal: Calendar) {
     //console.log('Data Service Provider Initialized');
     this.dataChangeSubject = new Subject<boolean>();
     this.dataChanged$ = this.dataChangeSubject.asObservable();
+    
+    this.setUpCalendar();
+    this.cal.createCalendar("Kompass").then(
+      (message) => { console.log(message); },
+      (error) => { console.log(error); }
+    );
+  }
+
+  //sets Calendar up for use 
+  setUpCalendar(){
+    if (this.cal.hasReadWritePermission()){
+      this.cal.listCalendars()
+    }
   }
 
   //handles extracting only the body of the server response

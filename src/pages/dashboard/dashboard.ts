@@ -35,9 +35,17 @@ export class DashboardPage {
           //@ts-ignore
           && new Date(record.nextOccurenceDate).getUTCMonth() === new Date().getUTCMonth()
           //@ts-ignore
+          && new Date(record.nextOccurenceDate).getUTCFullYear() === new Date().getUTCFullYear()
+          //@ts-ignore
           && record.occurenceLevel != 0 //filters for bills due in the current month
           //@ts-ignore
-          || (record.kind === 1 && new Date(record.nextOccurenceDate).getUTCMonth() === new Date().getUTCMonth() && record.occurenceLevel === 0 && record.payments.length === 0)
+          || (record.kind === 1 && new Date(record.nextOccurenceDate).getUTCMonth() === new Date().getUTCMonth() 
+          //@ts-ignore
+          && new Date(record.nextOccurenceDate).getUTCFullYear() === new Date().getUTCFullYear() 
+          //@ts-ignore
+          && record.occurenceLevel === 0 
+          //@ts-ignore
+          && record.payments.length === 0)
       ),
       error => this.errorMessage = <any>error
     );
