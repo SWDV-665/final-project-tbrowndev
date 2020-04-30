@@ -42,10 +42,9 @@ var PaymentServiceProvider = /** @class */ (function () {
     };
     PaymentServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]])
     ], PaymentServiceProvider);
     return PaymentServiceProvider;
-    var _a, _b;
 }());
 
 var PaymentModal = /** @class */ (function () {
@@ -97,10 +96,9 @@ var PaymentModal = /** @class */ (function () {
     PaymentModal = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/payment-service/payment.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        Payment for {{record.name}} \n        </ion-title>\n        <ion-buttons start>\n            <button ion-button (click)="cancel()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n  \n<ion-content padding-top>\n    <ion-card>\n        <ion-card-header>\n          {{record.name}}\n        </ion-card-header>\n        <ion-card-content>\n          <p>Due Date:  {{record.nextOccurenceDate | date: \'fullDate\'}}</p>\n          <p>Amout Due:  ${{record.amount}}</p>\n        </ion-card-content>\n    </ion-card>\n\n    <!--Payment details-->\n    <ion-item>\n        <ion-label>Paid Full Amount</ion-label>\n        <ion-toggle checked="true" (ionChange)=paymentChange()></ion-toggle>\n    </ion-item>\n    <ion-item *ngIf="isPartialPayment() === true">\n        <ion-input type="number" [(ngModel)]="payAmount"></ion-input>\n    </ion-item>\n    <ion-item>\n        <ion-label>Date Paid</ion-label>\n        <ion-datetime [(ngModel)]="payDate" displayFormat="MM/DD/YYYY" pickerFormat="MMMM/DD/YYYY"></ion-datetime>\n    </ion-item>\n    <ion-item>\n        <ion-label>Confirmation #</ion-label>\n        <ion-input type="text" [(ngModel)]="confnum"></ion-input>\n    </ion-item>\n\n    <button ion-button block large (click)="markRecordPaid()">\n        Mark as Paid\n    </button>\n</ion-content>\n  '/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/payment-service/payment.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
     ], PaymentModal);
     return PaymentModal;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=payment-service.js.map
@@ -220,7 +218,7 @@ var DashboardPage = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.dataService = dataService;
         this.dialogService = dialogService;
-        this.billDueTitle = "Unpaid Bills This Month";
+        this.billDueTitle = "Bills This Month";
         this.billsDue = [];
         dataService.dataChanged$.subscribe(function (dataChanged) {
             _this.loadBills();
@@ -319,8 +317,12 @@ var RecordsPage = /** @class */ (function () {
     };
     RecordsPage.prototype.loadRecords = function () {
         var _this = this;
-        this.dataService.getRecords().subscribe(function (allRecords) { return _this.income = allRecords.filter(function (record) { return record.kind === 0; }); }, function (error) { return _this.errorMessage = error; });
-        this.dataService.getRecords().subscribe(function (allRecords) { return _this.bills = allRecords.filter(function (record) { return record.kind === 1; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (allRecords) { return _this.income = allRecords.filter(function (record) { return record.kind === 0; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (allRecords) { return _this.bills = allRecords.filter(function (record) { return record.kind === 1; }); }, function (error) { return _this.errorMessage = error; });
     };
     RecordsPage.prototype.calcBillTotal = function () {
         var total = 0.00;
@@ -403,13 +405,20 @@ var BudgetPage = /** @class */ (function () {
     BudgetPage.prototype.ionViewDidLoad = function () {
         this.loadRecords();
     };
-    //@ts-ignore
     BudgetPage.prototype.loadRecords = function () {
         var _this = this;
-        this.dataService.getRecords().subscribe(function (items) { return _this.manuals = items.filter(function (record) { return (record.kind === 2 || record.kind === 3) && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
-        this.dataService.getRecords().subscribe(function (items) { return _this.income = items.filter(function (record) { return record.kind === 0 && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
-        this.dataService.getRecords().subscribe(function (items) { return _this.bills = items.filter(function (record) { return record.kind === 1 && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
-        this.dataService.getRecords().subscribe(function (items) { return _this.budget = items.filter(function (record) { return record.inBudget === true; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (items) { return _this.manuals = items.filter(function (record) { return (record.kind === 2 || record.kind === 3) && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (items) { return _this.income = items.filter(function (record) { return record.kind === 0 && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (items) { return _this.bills = items.filter(function (record) { return record.kind === 1 && record.inBudget === false; }); }, function (error) { return _this.errorMessage = error; });
+        this.dataService.getRecords().subscribe(
+        //@ts-ignore
+        function (items) { return _this.budget = items.filter(function (record) { return record.inBudget === true; }); }, function (error) { return _this.errorMessage = error; });
     };
     BudgetPage.prototype.calcBudgetExcess = function () {
         var total = 0.00;
@@ -619,7 +628,7 @@ var ProfilePage = /** @class */ (function () {
     };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Account\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card *ngFor="let profileData of profile">\n    <ion-label class="user-name" text-center>{{profileData.name}}</ion-label>\n    <ion-label class="user-nickname" text-center>&nbsp;&nbsp;{{profileData.nickname}}</ion-label>\n    <ion-icon class="icon-user-detail" name="briefcase">&nbsp;&nbsp;{{profileData.jobtitle}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="mail">&nbsp;&nbsp;{{profileData.email}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="call">&nbsp;&nbsp;{{profileData.phone}}</ion-icon>\n    <button ion-button full clear (click)="onEditProfileDetails(profileData)">Edit Profile</button>\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/
+            selector: 'page-profile',template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Account\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card *ngFor="let profileData of profile">\n    <ion-label class="user-name" text-center>{{profileData.name}}</ion-label>\n    <ion-label class="user-nickname" text-center>&nbsp;&nbsp;{{profileData.nickname}}</ion-label>\n    <ion-icon class="icon-user-detail" name="briefcase">&nbsp;&nbsp;{{profileData.jobtitle}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="mail">&nbsp;&nbsp;{{profileData.email}}</ion-icon>\n    <ion-icon class="icon-user-detail" name="call">&nbsp;&nbsp;{{profileData.phone}}</ion-icon>\n    <button ion-button full clear (click)="onEditProfileDetails(profileData)">Edit Profile</button>\n  </ion-card>\n\n  <ion-list>\n    <button ion-button full outline large style="margin: 0em;">\n      <ion-icon name="color-palette" style="margin-right: 1em;"></ion-icon>\n      <ion-label text-left>Themes</ion-label>\n    </button>\n\n    <button ion-button full clear large style="margin: 0em;">\n      <ion-icon name="calendar" style="margin-right: 1em;"></ion-icon>\n      <ion-label text-left>Calendar</ion-label>\n    </button>\n    <button ion-button full outline large style="margin: 0em;">\n      <ion-icon name="stats" style="margin-right: 1em;"></ion-icon>\n      <ion-label text-left>Stats</ion-label>\n    </button>\n    <button ion-button full clear large style="margin: 0em;">\n      <ion-icon name="lock" style="margin-right: 1em;"></ion-icon>\n      <ion-label text-left>Security</ion-label>\n    </button>\n    <button ion-button full outline large style="margin: 0em;">\n      <ion-icon name="information-circle" style="margin-right: 1em;"></ion-icon>\n      <ion-label text-left>About</ion-label>\n    </button>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/pages/profile/profile.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]])
     ], ProfilePage);
@@ -919,7 +928,28 @@ var DataServiceProvider = /** @class */ (function () {
     };
     DataServiceProvider.prototype.createPayment = function (record, payment) {
         var _this = this;
-        record.nextOccurenceDate = this.calcNextOccurenceDate(record);
+        var date = new Date(record.nextOccurenceDate);
+        switch (record.occurenceLevel) {
+            case 0://One Time
+                //no change in occurence date
+                break;
+            case 1:// Daily
+                date.setDate(date.getDate() + 1);
+                break;
+            case 2:// Weekly
+                date.setDate(date.getDate() + 7);
+                break;
+            case 3://Bi-Weekly
+                date.setDate(date.getDate() + 14);
+                break;
+            case 4://Monthly
+                date.setMonth(date.getMonth() + 1);
+                break;
+            case 5://Yearly
+                date.setFullYear(date.getFullYear() + 1);
+                break;
+        }
+        record.nextOccurenceDate = date.toLocaleDateString().split("/").join("-");
         this.http.post(this.baseURL + "/api/kompass/payments", payment).subscribe(function (res) {
             _this.Payments = res,
                 //@ts-ignore
@@ -928,30 +958,6 @@ var DataServiceProvider = /** @class */ (function () {
                 _this.dataChangeSubject.next(true);
         });
     };
-    DataServiceProvider.prototype.calcNextOccurenceDate = function (record) {
-        var currentDate = new Date(record.nextOccurenceDate);
-        switch (record.occurenceLevel) {
-            case 0:// one time means no next occurence date 
-                console.log(currentDate);
-                return currentDate;
-            case 1:// occur the next day
-                console.log(currentDate.setDate(currentDate.getUTCDate() + 1));
-                return currentDate.setDate(currentDate.getUTCDate() + 1);
-            case 2:// occur next week
-                console.log(currentDate.setDate(currentDate.getUTCDate() + 7));
-                return currentDate.setDate(currentDate.getUTCDate() + 7);
-            case 3:// occur in 2 weeks
-                console.log(currentDate.setDate(currentDate.getUTCDate() + 14));
-                return currentDate.setDate(currentDate.getUTCDate() + 14);
-            case 4:// occur next month
-                console.log(currentDate.setDate(currentDate.getUTCMonth() + 1));
-                return currentDate.setDate(currentDate.getUTCMonth() + 1);
-            case 5:// occur next year
-                console.log(currentDate.setDate(currentDate.getUTCFullYear() + 1));
-                return currentDate.setDate(currentDate.getUTCFullYear() + 1);
-        }
-    };
-    ;
     DataServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
@@ -1051,9 +1057,10 @@ var RecordServiceProvider = /** @class */ (function () {
     };
     RecordServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _b || Object])
     ], RecordServiceProvider);
     return RecordServiceProvider;
+    var _a, _b;
 }());
 
 var RecordModal = /** @class */ (function () {
@@ -1064,8 +1071,11 @@ var RecordModal = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.viewCtrl = viewCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.formattedDate = new Date().toISOString();
         this.payments = [];
         this.record = params.data;
+        //formats date for use on page
+        this.formattedDate = new Date(this.record.nextOccurenceDate).toISOString();
         this.record.payments.forEach(function (id) {
             _this.dataService.getPayment(id).subscribe(function (payment) {
                 _this.payments.push(payment);
@@ -1075,6 +1085,9 @@ var RecordModal = /** @class */ (function () {
     //close record modal
     RecordModal.prototype.close = function () {
         this.viewCtrl.dismiss();
+    };
+    RecordModal.prototype.updateDate = function (e) {
+        this.record.nextOccurenceDate = new Date(e).toLocaleDateString().split("/").join("-");
     };
     RecordModal.prototype.updateRecord = function () {
         this.dataService.updateRecord(this.record);
@@ -1107,11 +1120,12 @@ var RecordModal = /** @class */ (function () {
         prompt.present();
     };
     RecordModal = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        {{record.name}} \n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="close()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-item>\n            <ion-input [(ngModel)]="record.name" type="text" placeholder="Name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Next Occurence Date</ion-label>\n            <ion-datetime [(ngModel)]="record.nextOccurenceDate" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-label>Occurence Level</ion-label>\n            <ion-select [(ngModel)]="record.occurenceLevel" placeholder="Select">\n                <ion-option value="0">One Time</ion-option>\n                <ion-option value="1">Daily</ion-option>\n                <ion-option value="2">Weekly</ion-option>\n                <ion-option value="3">Bi-Weekly</ion-option>\n                <ion-option value="4">Monthly</ion-option>\n                <ion-option value="5">Yearly</ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-label *ngIf="record.kind == 0">Direct Deposit</ion-label>\n            <ion-label *ngIf="record.kind == 1">Auto Pay</ion-label>\n            <ion-toggle [(ngModel)]="record.isAuto"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" [(ngModel)]="record.amount" placeholder="Amount (Optional)"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-textarea [(ngModel)]="record.description" placeholder="Enter more information here..."></ion-textarea>\n        </ion-item>\n    </ion-list>\n    <ion-list *ngIf="record.kind == 1">\n        <ion-list-header>Past Payments</ion-list-header>\n        <p *ngIf="payments.length === 0" text-center color="klightgray">No Past Payments :(</p>\n        <ion-item *ngFor="let payment of payments" style="height: 30px;">\n            <ion-grid>\n                <ion-row>\n                  <ion-col col-8>\n                    Payment<br>\n                    <p>{{payment.confnum}}</p>\n                  </ion-col>\n                  <ion-col col-4 text-right>\n                    {{payment.payDate | date}}\n                    <h3>{{payment.payAmount | currency}}</h3>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n        </ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord()">\n        Update\n    </button>\n    <button ion-button color="kred" block large (click)="presentDeletePrompt()">\n        Delete Record\n    </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        {{record.name}} \n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="close()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-item>\n            <ion-input [(ngModel)]="record.name" type="text" placeholder="Name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Next Occurence Date</ion-label>\n            <ion-datetime [(ngModel)]="formattedDate" (ngModelChange)="updateDate($event)" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-label>Occurence Level</ion-label>\n            <ion-select [(ngModel)]="record.occurenceLevel" placeholder="Select">\n                <ion-option value="0">One Time</ion-option>\n                <ion-option value="1">Daily</ion-option>\n                <ion-option value="2">Weekly</ion-option>\n                <ion-option value="3">Bi-Weekly</ion-option>\n                <ion-option value="4">Monthly</ion-option>\n                <ion-option value="5">Yearly</ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-label *ngIf="record.kind == 0">Direct Deposit</ion-label>\n            <ion-label *ngIf="record.kind == 1">Auto Pay</ion-label>\n            <ion-toggle [(ngModel)]="record.isAuto"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" [(ngModel)]="record.amount" placeholder="Amount (Optional)"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-textarea [(ngModel)]="record.description" placeholder="Enter more information here..."></ion-textarea>\n        </ion-item>\n    </ion-list>\n    <ion-list *ngIf="record.kind == 1">\n        <ion-list-header>Past Payments</ion-list-header>\n        <p *ngIf="payments.length === 0" text-center color="klightgray">No Past Payments :(</p>\n        <ion-item *ngFor="let payment of payments" style="height: 30px;">\n            <ion-grid>\n                <ion-row>\n                  <ion-col col-8>\n                    Payment<br>\n                    <p>{{payment.confnum}}</p>\n                  </ion-col>\n                  <ion-col col-4 text-right>\n                    {{payment.payDate | date}}\n                    <h3>{{payment.payAmount | currency}}</h3>\n                  </ion-col>\n                </ion-row>\n              </ion-grid>\n        </ion-item>\n    </ion-list>\n    <button ion-button block large (click)="updateRecord()">\n        Update\n    </button>\n    <button ion-button color="kred" block large (click)="presentDeletePrompt()">\n        Delete Record\n    </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/record.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _f || Object])
     ], RecordModal);
     return RecordModal;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 var NewRecordModal = /** @class */ (function () {
@@ -1127,10 +1141,14 @@ var NewRecordModal = /** @class */ (function () {
         this.viewCtrl.dismiss();
     };
     NewRecordModal.prototype.createRecord = function () {
+        var year = this.nextOccurenceDate.substring(0, 4);
+        var month = parseInt(this.nextOccurenceDate.substring(5, 7)) - 1; //Jan starts at 0
+        var day = this.nextOccurenceDate.substring(8, this.nextOccurenceDate.length);
+        var date = new Date(parseInt(year), month, parseInt(day)).toLocaleDateString().split("/").join("-");
         this.dataService.createRecord({
             name: this.name,
             kind: this.kind,
-            nextOccurenceDate: this.nextOccurenceDate,
+            nextOccurenceDate: date,
             occurenceLevel: this.occurenceLevel,
             isAuto: this.isAuto,
             amount: this.amount,
@@ -1142,9 +1160,10 @@ var NewRecordModal = /** @class */ (function () {
     NewRecordModal = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/newRecord.html"*/'<ion-header>\n    <ion-toolbar>\n        <ion-title>\n        {{name}} \n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="close()">\n                <ion-icon name="close"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-item>\n            <ion-input [(ngModel)]="name" type="text" placeholder="Name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Next Occurence Date</ion-label>\n            <ion-datetime [(ngModel)]="nextOccurenceDate" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-label>Occurence Level</ion-label>\n            <ion-select [(ngModel)]="occurenceLevel" placeholder="Select">\n                <ion-option value="0">One Time</ion-option>\n                <ion-option value="1">Daily</ion-option>\n                <ion-option value="2">Weekly</ion-option>\n                <ion-option value="3">Bi-Weekly</ion-option>\n                <ion-option value="4">Monthly</ion-option>\n                <ion-option value="5">Yearly</ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-label *ngIf="kind == 0">Direct Deposit</ion-label>\n            <ion-label *ngIf="kind == 1">Auto Pay</ion-label>\n            <ion-toggle [(ngModel)]="isAuto"></ion-toggle>\n        </ion-item>\n        <ion-item>\n            <ion-input type="number" [(ngModel)]="amount" placeholder="Amount (Optional)"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-textarea [(ngModel)]="description" placeholder="Enter more information here..."></ion-textarea>\n        </ion-item>\n    </ion-list>\n    <button ion-button block large (click)="createRecord()">\n        Create Record\n    </button>\n</ion-content>\n\n'/*ion-inline-end:"/Users/tbrown/Documents/SWDV665/final-project-tbrowndev/src/providers/record-service/newRecord.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_data_service_data_service__["a" /* DataServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _e || Object])
     ], NewRecordModal);
     return NewRecordModal;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=record-service.js.map

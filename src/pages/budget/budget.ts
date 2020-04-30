@@ -27,22 +27,26 @@ export class BudgetPage {
     this.loadRecords();
   }
 
-  //@ts-ignore
+  
   loadRecords() {
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       items => this.manuals = items.filter(record => (record.kind === 2 || record.kind === 3) && record.inBudget === false),
       error => this.errorMessage = <any>error
     );
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       items => this.income = items.filter(record => record.kind === 0 && record.inBudget === false),
       error => this.errorMessage = <any>error
     );
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       items => this.bills = items.filter(record => record.kind === 1 && record.inBudget === false),
       error => this.errorMessage = <any>error
     );
 
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       items => this.budget = items.filter(record => record.inBudget === true),
       error => this.errorMessage = <any>error
     );

@@ -129,7 +129,30 @@ export class DataServiceProvider {
   }
 
   createPayment(record, payment) {
-    record.nextOccurenceDate = this.calcNextOccurenceDate(record);
+    let date = new Date(record.nextOccurenceDate);
+    switch (record.occurenceLevel) {
+      case 0: //One Time
+        //no change in occurence date
+        break;
+      case 1: // Daily
+        date.setDate(date.getDate() + 1);
+        break;
+      case 2: // Weekly
+        date.setDate(date.getDate() + 7);
+        break;
+      case 3: //Bi-Weekly
+        date.setDate(date.getDate() + 14);
+        break;
+      case 4: //Monthly
+        date.setMonth(date.getMonth() + 1);
+        break;
+      case 5: //Yearly
+        date.setFullYear(date.getFullYear() + 1);
+        break;
+    }
+
+    record.nextOccurenceDate = date.toLocaleDateString().split("/").join("-");
+
     this.http.post(this.baseURL + "/api/kompass/payments", payment).subscribe(res => {
       this.Payments = res,
         //@ts-ignore
@@ -138,28 +161,4 @@ export class DataServiceProvider {
         this.dataChangeSubject.next(true);
     });
   }
-
-  calcNextOccurenceDate(record) {
-    var currentDate = new Date(record.nextOccurenceDate);
-    switch (record.occurenceLevel) {
-      case 0: // one time means no next occurence date 
-        console.log(currentDate)
-        return currentDate;
-      case 1: // occur the next day
-      console.log(currentDate.setDate(currentDate.getUTCDate() + 1))
-        return currentDate.setDate(currentDate.getUTCDate() + 1)
-      case 2: // occur next week
-      console.log(currentDate.setDate(currentDate.getUTCDate() + 7))
-        return currentDate.setDate(currentDate.getUTCDate() + 7)
-      case 3: // occur in 2 weeks
-      console.log(currentDate.setDate(currentDate.getUTCDate() + 14))
-        return currentDate.setDate(currentDate.getUTCDate() + 14)
-      case 4: // occur next month
-      console.log(currentDate.setDate(currentDate.getUTCMonth() + 1))
-        return currentDate.setDate(currentDate.getUTCMonth() + 1)
-      case 5: // occur next year
-      console.log(currentDate.setDate(currentDate.getUTCFullYear() + 1))
-        return currentDate.setDate(currentDate.getUTCFullYear() + 1)
-    }
-  };
 }

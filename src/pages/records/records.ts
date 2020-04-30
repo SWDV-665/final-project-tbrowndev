@@ -29,10 +29,12 @@ export class RecordsPage {
 
   loadRecords() {
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       allRecords => this.income = allRecords.filter(record => record.kind === 0),
       error => this.errorMessage = <any>error
     );
     this.dataService.getRecords().subscribe(
+      //@ts-ignore
       allRecords => this.bills = allRecords.filter(record => record.kind === 1),
       error => this.errorMessage = <any>error
     );

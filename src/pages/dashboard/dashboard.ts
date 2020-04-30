@@ -12,7 +12,7 @@ import { RecordServiceProvider } from '../../providers/record-service/record-ser
 })
 export class DashboardPage {
 
-  billDueTitle = "Unpaid Bills This Month"
+  billDueTitle = "Bills This Month"
 
   billsDue = [];
   errorMessage: string;

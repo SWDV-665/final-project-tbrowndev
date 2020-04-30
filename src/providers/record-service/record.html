@@ -18,7 +18,7 @@
         </ion-item>
         <ion-item>
             <ion-label>Next Occurence Date</ion-label>
-            <ion-datetime [(ngModel)]="record.nextOccurenceDate" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>
+            <ion-datetime [(ngModel)]="formattedDate" (ngModelChange)="updateDate($event)" pickerFormat="MMM DD, YYYY" displayFormat="MMM DD, YYYY" placeholder="Select Date"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label>Occurence Level</ion-label>

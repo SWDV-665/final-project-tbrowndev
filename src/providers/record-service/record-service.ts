@@ -33,10 +33,14 @@ export class RecordServiceProvider {
 })
 export class RecordModal {
   record;
+  formattedDate = new Date().toISOString();
   payments = [];
 
   constructor(params: NavParams,public alertCtrl:AlertController, public dataService: DataServiceProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
     this.record = params.data;
+    //formats date for use on page
+    this.formattedDate = new Date( this.record.nextOccurenceDate ).toISOString();
+
     this.record.payments.forEach( id => {
       this.dataService.getPayment(id).subscribe( payment => {
         this.payments.push(payment);
@@ -47,6 +51,10 @@ export class RecordModal {
   //close record modal
   close() {
     this.viewCtrl.dismiss();
+  }
+
+  updateDate(e){
+    this.record.nextOccurenceDate = new Date(e).toLocaleDateString().split("/").join("-");
   }
 
   updateRecord() {
@@ -87,7 +95,7 @@ export class RecordModal {
 export class NewRecordModal {
   name: String;
   kind: Number;
-  nextOccurenceDate: String;
+  nextOccurenceDate: string;
   occurenceLevel: Number;
   isAuto: Boolean;
   amount: Number;
@@ -103,10 +111,15 @@ export class NewRecordModal {
   }
 
   createRecord() {
+    var year = this.nextOccurenceDate.substring(0,4);
+    var month = parseInt(this.nextOccurenceDate.substring(5,7)) - 1; //Jan starts at 0
+    var day = this.nextOccurenceDate.substring(8, this.nextOccurenceDate.length);
+    var date = new Date(parseInt(year), month, parseInt(day)).toLocaleDateString().split("/").join("-");
+
     this.dataService.createRecord({
       name: this.name,
       kind: this.kind,
-      nextOccurenceDate: this.nextOccurenceDate,
+      nextOccurenceDate: date,
       occurenceLevel: this.occurenceLevel,
       isAuto: this.isAuto,
       amount: this.amount,
