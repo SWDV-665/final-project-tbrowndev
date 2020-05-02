@@ -18,7 +18,6 @@ import { RecordModal } from '../providers/record-service/record-service';
 import { NewRecordModal } from '../providers/record-service/record-service';
 import { PaymentServiceProvider } from '../providers/payment-service/payment-service';
 import { RecordServiceProvider } from '../providers/record-service/record-service';
-import { BudgetServiceProvider } from '../providers/budget-service/budget-service';
 import { DialogServiceProvider } from '../providers/dialog-service/dialog-service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -58,7 +57,6 @@ import { HttpClientModule } from '@angular/common/http';
     DataServiceProvider,
     PaymentServiceProvider,
     RecordServiceProvider,
-    BudgetServiceProvider,
     DialogServiceProvider
   ]
 })
