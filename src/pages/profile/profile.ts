@@ -11,61 +11,62 @@ export class ProfilePage {
 
   profile = [];
 
-  inDarkMode: boolean = true;
+  inDarkMode: boolean = false;
 
-  errorMessage:string;
+  errorMessage: string;
 
-  constructor(public alertCtrl: AlertController,public navCtrl: NavController, public dataService: DataServiceProvider) {
-    dataService.dataChanged$.subscribe((dataChanged:boolean) => {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public dataService: DataServiceProvider) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
       this.loadProfile();
     })
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.loadProfile();
   }
 
-  loadProfile(){
+  loadProfile() {
     this.dataService.getProfile().subscribe(
       profile => this.profile = profile,
       error => this.errorMessage = <any>error
     );
   }
 
-  onEditProfileDetails(profileData){
+  onEditProfileDetails(profileData) {
     const prompt = this.alertCtrl.create({
       title: 'Edit Profile Details',
-      inputs:[{
-        name:'name',
+      inputs: [{
+        name: 'name',
         placeholder: 'Name',
         value: profileData.name
-      },{
+      }, {
         name: 'nickname',
-        placeholder:'Nickname',
+        placeholder: 'Nickname',
         value: profileData.nickname
       }, {
         name: 'jobtitle',
         placeholder: 'Occupation',
         value: profileData.jobtitle
       }, {
-        name:'email',
+        name: 'email',
         placeholder: 'Email',
         value: profileData.email
-      },{
-        name:'phone',
+      }, {
+        name: 'phone',
         placeholder: 'Phone',
         value: profileData.phone
       }],
-      buttons:[{
+      buttons: [{
         text: 'Cancel',
         role: 'cancel'
-      },{
+      }, {
         text: 'Update',
-        handler: data =>{
+        handler: data => {
           this.dataService.updateProfile(profileData._id, data);
         }
       }]
     })
     prompt.present();
   }
+  
 }

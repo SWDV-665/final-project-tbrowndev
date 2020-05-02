@@ -32,7 +32,7 @@ export class PaymentModal {
   currentDate: string = new Date().toISOString();
   record;
   partialPayment: boolean = false;
-  payDate: String; 
+  payDate: String = new Date().toISOString(); 
   payAmount: Number;
   confnum: String;
 

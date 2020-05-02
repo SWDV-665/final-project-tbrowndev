@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject';
+import { Calendar } from '@ionic-native/calendar';
+
 
 /*
   Generated class for the DataServiceProvider provider.
@@ -27,10 +29,46 @@ export class DataServiceProvider {
 
   private dataChangeSubject: Subject<boolean>;
 
-  constructor(public http: HttpClient) {
+  calendarMsg: any;
+  calendarErr: any;
+
+  constructor(public http: HttpClient, private cal: Calendar) {
     //console.log('Data Service Provider Initialized');
     this.dataChangeSubject = new Subject<boolean>();
     this.dataChanged$ = this.dataChangeSubject.asObservable();
+
+    this.setUpCalendar();
+  }
+
+  setUpCalendar() {
+    if (this.cal.hasReadWritePermission()) {
+      this.cal.createCalendar("Kompass").then(
+        (msg) => { this.calendarMsg = msg; },
+        (err) => { this.calendarErr = err; }
+      );
+    }
+    else {
+      this.cal.requestReadWritePermission().then(
+        (msg) => { this.cal.createCalendar("Kompass") }
+      );
+      this.cal.createCalendar("Kompass").then(
+        (msg) => { this.calendarMsg = msg; },
+        (err) => { this.calendarErr = err; }
+      );
+    }
+  }
+
+  addToCalendar(record) {
+    var year = new Date(record.nextOccurenceDate).getUTCFullYear();
+    var month = new Date(record.nextOccurenceDate).getUTCMonth();
+    var day = new Date(record.nextOccurenceDate).getUTCDate();
+    const startDate = new Date(year, month, day, 0, 0, 0, 0);
+    const endDate = new Date(year, month, day, 24, 0, 0, 0);
+
+    this.cal.createEventWithOptions(record.name, null, record.description, startDate, endDate, { calendarName: "Kompass" })
+      .then(
+        (msg) => this.cal.openCalendar(new Date(year, month, day))
+      );
   }
 
   //handles extracting only the body of the server response
@@ -135,23 +173,39 @@ export class DataServiceProvider {
         //no change in occurence date
         break;
       case 1: // Daily
-        date.setDate(date.getDate() + 1);
+        date.setDate(date.getUTCDate() + 1);
         break;
       case 2: // Weekly
-        date.setDate(date.getDate() + 7);
+        date.setDate(date.getUTCDate() + 7);
         break;
       case 3: //Bi-Weekly
-        date.setDate(date.getDate() + 14);
+        date.setDate(date.getUTCDate() + 14);
         break;
       case 4: //Monthly
-        date.setMonth(date.getMonth() + 1);
+        date.setMonth(date.getUTCMonth() + 1);
         break;
       case 5: //Yearly
-        date.setFullYear(date.getFullYear() + 1);
+        date.setFullYear(date.getUTCFullYear() + 1);
         break;
     }
 
-    record.nextOccurenceDate = date.toLocaleDateString().split("/").join("-");
+    //record.nextOccurenceDate = date.toLocaleDateString().split("/").join("-");
+    if (date.getUTCMonth() < 10) {
+      if (date.getUTCDate() < 10) {
+        record.nextOccurenceDate = date.getUTCFullYear() + "-0" + date.getUTCMonth() + "-0" + date.getUTCDate();
+      }
+      else {
+        record.nextOccurenceDate = date.getUTCFullYear() + "-0" + date.getUTCMonth() + "-" + date.getUTCDate();
+      }
+    }
+    else {
+      if (date.getUTCDate() < 10) {
+        record.nextOccurenceDate = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-0" + date.getUTCDate();
+      }
+      else {
+        record.nextOccurenceDate = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-" + date.getUTCDate();
+      }
+    }
 
     this.http.post(this.baseURL + "/api/kompass/payments", payment).subscribe(res => {
       this.Payments = res,

@@ -7,11 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-calendar": {
-      "CALENDAR_USAGE_DESCRIPTION": " ",
-      "CONTACTS_USAGE_DESCRIPTION": " ",
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
-    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
@@ -28,6 +23,11 @@
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "cordova-plugin-calendar": {
+      "CALENDAR_USAGE_DESCRIPTION": " ",
+      "CONTACTS_USAGE_DESCRIPTION": " ",
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
