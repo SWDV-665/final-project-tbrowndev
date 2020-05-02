@@ -1,15 +1,4 @@
 {
-  "cordova-plugin-calendar": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-calendar@5.1.5"
-    },
-    "is_top_level": true,
-    "variables": {
-      "CALENDAR_USAGE_DESCRIPTION": " ",
-      "CONTACTS_USAGE_DESCRIPTION": " "
-    }
-  },
   "cordova-plugin-whitelist": {
     "source": {
       "type": "registry",

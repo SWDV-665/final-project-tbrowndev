@@ -21,7 +21,6 @@ import { RecordServiceProvider } from '../providers/record-service/record-servic
 import { BudgetServiceProvider } from '../providers/budget-service/budget-service';
 import { DialogServiceProvider } from '../providers/dialog-service/dialog-service';
 import { HttpClientModule } from '@angular/common/http';
-import { Calendar } from '@ionic-native/calendar'
 
 @NgModule({
   declarations: [
@@ -55,7 +54,6 @@ import { Calendar } from '@ionic-native/calendar'
   providers: [
     StatusBar,
     SplashScreen,
-    Calendar,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataServiceProvider,
     PaymentServiceProvider,
