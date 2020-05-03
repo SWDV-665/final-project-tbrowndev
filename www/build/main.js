@@ -985,43 +985,29 @@ var DataServiceProvider = /** @class */ (function () {
     DataServiceProvider.prototype.createPayment = function (record, payment) {
         var _this = this;
         var date = new Date(record.nextOccurenceDate);
+        var utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
         switch (record.occurenceLevel) {
             case 0://One Time
                 //no change in occurence date
                 break;
             case 1:// Daily
-                date.setDate(date.getUTCDate() + 1);
+                utcDate.setUTCDate(utcDate.getUTCDate() + 1);
                 break;
             case 2:// Weekly
-                date.setDate(date.getUTCDate() + 7);
+                utcDate.setUTCDate(utcDate.getUTCDate() + 7);
                 break;
             case 3://Bi-Weekly
-                date.setDate(date.getUTCDate() + 14);
+                utcDate.setUTCDate(utcDate.getUTCDate() + 14);
                 break;
             case 4://Monthly
-                date.setMonth(date.getUTCMonth() + 1);
+                utcDate.setUTCMonth(utcDate.getUTCMonth() + 1);
                 break;
             case 5://Yearly
-                date.setFullYear(date.getUTCFullYear() + 1);
+                utcDate.setUTCFullYear(utcDate.getUTCFullYear() + 1);
                 break;
         }
-        //record.nextOccurenceDate = date.toLocaleDateString().split("/").join("-");
-        if (date.getUTCMonth() < 10) {
-            if (date.getUTCDate() < 10) {
-                record.nextOccurenceDate = date.getUTCFullYear() + "-0" + date.getUTCMonth() + "-0" + date.getUTCDate();
-            }
-            else {
-                record.nextOccurenceDate = date.getUTCFullYear() + "-0" + date.getUTCMonth() + "-" + date.getUTCDate();
-            }
-        }
-        else {
-            if (date.getUTCDate() < 10) {
-                record.nextOccurenceDate = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-0" + date.getUTCDate();
-            }
-            else {
-                record.nextOccurenceDate = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-" + date.getUTCDate();
-            }
-        }
+        ;
+        record.nextOccurenceDate = utcDate.toISOString().substring(0, 10);
         this.http.post(this.baseURL + "/api/kompass/payments", payment).subscribe(function (res) {
             _this.Payments = res,
                 //@ts-ignore
@@ -1032,9 +1018,10 @@ var DataServiceProvider = /** @class */ (function () {
     };
     DataServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_calendar__["a" /* Calendar */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_calendar__["a" /* Calendar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_calendar__["a" /* Calendar */]) === "function" && _b || Object])
     ], DataServiceProvider);
     return DataServiceProvider;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=data-service.js.map
