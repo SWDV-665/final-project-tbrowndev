@@ -11,7 +11,7 @@ export class ProfilePage {
 
   profile = [];
 
-  inDarkMode: boolean = false;
+  inDarkMode: boolean = true;
 
   errorMessage: string;
 

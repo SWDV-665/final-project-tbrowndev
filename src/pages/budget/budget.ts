@@ -27,7 +27,6 @@ export class BudgetPage {
     this.loadRecords();
   }
 
-  
   loadRecords() {
     this.dataService.getRecords().subscribe(
       //@ts-ignore
@@ -75,6 +74,32 @@ export class BudgetPage {
     this.dataService.updateRecord(record);
   }
 
+  removeManualItem(record){
+    this.presentDeletePrompt(record);
+  }
+
+  presentDeletePrompt(record) {
+    const prompt = this.alertCtrl.create({
+      title: 'Delete ' + record.name,
+      message: "Are You Sure?",
+      buttons: [
+        {
+          text: 'No',
+          handler: data => {
+            //do nothing
+          }
+        },
+        {
+          text: 'Yes',
+          handler: data => {
+            this.dataService.deleteRecord(record);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
   onEditManualItem(record){
     const prompt = this.alertCtrl.create({
       title: 'Edit Manual Record',
@@ -90,7 +115,6 @@ export class BudgetPage {
       }],
       buttons:[{
         text: 'Cancel',
-        role: 'cancel'
       },{
         text: 'Update',
         handler: data =>{

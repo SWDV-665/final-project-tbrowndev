@@ -36,13 +36,13 @@ export class RecordModal {
   //formattedDate = new Date().toISOString();
   payments = [];
 
-  constructor(params: NavParams,public alertCtrl:AlertController, public dataService: DataServiceProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
+  constructor(params: NavParams, public alertCtrl: AlertController, public dataService: DataServiceProvider, public toastCtrl: ToastController, public viewCtrl: ViewController, public loadingCtrl: LoadingController) {
     this.record = params.data;
     //formats date for use on page
     //this.formattedDate = new Date( this.record.nextOccurenceDate ).toISOString();
 
-    this.record.payments.forEach( id => {
-      this.dataService.getPayment(id).subscribe( payment => {
+    this.record.payments.forEach(id => {
+      this.dataService.getPayment(id).subscribe(payment => {
         this.payments.push(payment);
       });
     });
@@ -53,7 +53,7 @@ export class RecordModal {
     this.viewCtrl.dismiss();
   }
 
-  addToCalendar(){
+  addToCalendar() {
     this.dataService.addToCalendar(this.record);
   }
 
@@ -63,10 +63,6 @@ export class RecordModal {
 
   updateRecord() {
     this.dataService.updateRecord(this.record);
-    this.close();
-  }
-  deleteRecord(){
-    this.dataService.deleteRecord(this.record);
     this.close();
   }
 
@@ -84,7 +80,8 @@ export class RecordModal {
         {
           text: 'Yes',
           handler: data => {
-            this.deleteRecord();
+            this.dataService.deleteRecord(this.record);
+            this.close();
           }
         }
       ]
